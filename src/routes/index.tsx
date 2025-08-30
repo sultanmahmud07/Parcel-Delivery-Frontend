@@ -44,6 +44,26 @@ export const router = createBrowserRouter([
         Component: withAuth(Booking),
         path: "booking/:id",
       },
+      {
+        Component: Login,
+        path: "/login",
+      },
+      {
+        Component: Register,
+        path: "/register",
+      },
+      {
+        Component: Verify,
+        path: "/verify",
+      },
+      {
+        Component: Unauthorized,
+        path: "/unauthorized",
+      },
+      {
+        Component: Success,
+        path: "/payment/success",
+      },
     ],
   },
   {
@@ -62,26 +82,26 @@ export const router = createBrowserRouter([
       ...generateRoutes(userSidebarItems),
     ],
   },
-  {
-    Component: Login,
-    path: "/login",
-  },
-  {
-    Component: Register,
-    path: "/register",
-  },
-  {
-    Component: Verify,
-    path: "/verify",
-  },
-  {
-    Component: Unauthorized,
-    path: "/unauthorized",
-  },
-  {
-    Component: Success,
-    path: "/payment/success",
-  },
+  // {
+  //   Component: Login,
+  //   path: "/login",
+  // },
+  // {
+  //   Component: Register,
+  //   path: "/register",
+  // },
+  // {
+  //   Component: Verify,
+  //   path: "/verify",
+  // },
+  // {
+  //   Component: Unauthorized,
+  //   path: "/unauthorized",
+  // },
+  // {
+  //   Component: Success,
+  //   path: "/payment/success",
+  // },
   {
     Component: Fail,
     path: "/payment/fail",

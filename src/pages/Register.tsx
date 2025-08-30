@@ -1,29 +1,18 @@
-import TravelRegister from "@/assets/images/travel-register.jpg";
-import { Link } from "react-router";
-import Logo from "@/assets/icons/Logo";
+import loginImg from "@/assets/images/register-img.jpg";
 import { RegisterForm } from "@/components/modules/Authentication/RegisterForm";
 
 export default function Register() {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="relative hidden bg-muted lg:block">
+    <div className="main-container py-5 md:py-10 flex flex-col-reverse md:flex-row md:items-center gap-4 md:gap-6">
+      <div className="w-ful full md:w-1/2">
         <img
-          src={TravelRegister}
+          src={loginImg}
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8]"
+          className="w-full rounded"
         />
       </div>
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <Link to="/" className="flex items-center gap-2 font-medium">
-            <Logo />
-          </Link>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <RegisterForm />
-          </div>
-        </div>
+      <div className="w-full md:w-1/2">
+        <RegisterForm />
       </div>
     </div>
   );
