@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { IApiError } from "@/types";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -32,8 +33,9 @@ export function LoginForm({
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
-      toast.error(`${err.data.message}`);
+      console.log(err);
+      const error = err as IApiError;
+      toast.error(`${error.data.message}`);
     }
   };
 

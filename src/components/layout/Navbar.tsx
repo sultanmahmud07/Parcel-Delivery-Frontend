@@ -21,7 +21,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 100) {
+      if (offset > 20) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
@@ -46,15 +46,14 @@ const Navbar = () => {
     { href: "/", label: "Home", role: "PUBLIC" },
     { href: "/about", label: "About", role: "PUBLIC" },
     { href: "/tours", label: "Tours", role: "PUBLIC" },
+    { href: "/team", label: "Our Team", role: "PUBLIC" },
+    { href: "/contact", label: "Contact Us", role: "PUBLIC" },
     { href: "/admin", label: "Dashboard", role: role.admin },
     { href: "/admin", label: "Dashboard", role: role.superAdmin },
     { href: "/sender", label: "Dashboard", role: role.sender },
     { href: "/receiver", label: "Dashboard", role: role.receiver },
-    { href: "/team", label: "Our Team", role: "PUBLIC" },
-    { href: "/contact", label: "Contact Us", role: "PUBLIC" },
   ];
 
-console.log(navigationLinks)
   return (
     <header>
       <nav className={`z-40  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-[#00000000]"}`}>

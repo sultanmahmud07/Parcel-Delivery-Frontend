@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import { IApiError } from "@/types";
 
 const registerSchema = z
   .object({
@@ -27,6 +28,9 @@ const registerSchema = z
       })
       .max(50),
     email: z.email(),
+    role: z.enum(["SENDER", "RECEIVER"], {
+      message: "Please select a valid role",
+    }),
     password: z.string().min(8, { error: "Password is too short" }),
     confirmPassword: z
       .string()
@@ -49,6 +53,7 @@ export function RegisterForm({
     defaultValues: {
       name: "",
       email: "",
+      role: undefined,
       password: "",
       confirmPassword: "",
     },
@@ -58,16 +63,20 @@ export function RegisterForm({
     const userInfo = {
       name: data.name,
       email: data.email,
+      role: data.role,
       password: data.password,
     };
 
     try {
-      await register(userInfo).unwrap();
-
-      toast.success("User created successfully");
-      navigate("/verify");
-    } catch (error) {
-      console.error(error);
+      const res = await register(userInfo).unwrap();
+      if (res.success) {
+        toast.success("User created successfully");
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error(err);
+      const error = err as IApiError;
+      toast.error(`${error.data.message}`);
     }
   };
 
@@ -90,7 +99,7 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input type="text" placeholder="enter your name" {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -107,7 +116,7 @@ export function RegisterForm({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="john.doe@company.com"
+                      placeholder="enter your email"
                       type="email"
                       {...field}
                     />
@@ -119,6 +128,30 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="">Select a role</option>
+                      <option value="SENDER">SENDER</option>
+                      <option value="RECEIVER">RECEIVER</option>
+                    </select>
+                  </FormControl>
+                  <FormDescription className="sr-only">
+                    Select your user role.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="password"

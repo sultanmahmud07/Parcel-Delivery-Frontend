@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Logo from "@/assets/icons/Logo";
+import logo from "../assets/images/logo/logo.png";
 import { Link } from "react-router";
 import { getSidebarItems } from "@/utils/getSidebarItems";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
@@ -22,13 +22,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
     navMain: getSidebarItems(userData?.data?.role),
   };
-
+console.log(userData)
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="items-center">
-        <Link to="/">
-          <Logo />
-        </Link>
+      <SidebarHeader>
+        <Link  to="/">
+              <img
+                src={logo}
+                alt="logo"
+                width={200}
+                height={100}
+                className="w-16"
+              />
+              {/* <span className="text-primary text-xs uppercase font-bold">Books Finder</span> */}
+            </Link>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}

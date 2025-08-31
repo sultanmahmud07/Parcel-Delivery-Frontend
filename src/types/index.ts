@@ -9,7 +9,14 @@ export interface IResponse<T> {
   message: string;
   data: T;
 }
-
+export interface IApiError {
+  status: number;
+  data: {
+    success: boolean;
+    message: string;
+    error?: unknown;
+  };
+}
 export interface ISidebarItem {
   title: string;
   items: {
