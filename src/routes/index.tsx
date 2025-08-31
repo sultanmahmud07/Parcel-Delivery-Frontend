@@ -7,7 +7,6 @@ import Verify from "@/pages/Verify";
 import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
-import { userSidebarItems } from "./userSidebarItems";
 import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/Unauthorized";
 import { role } from "@/constants/role";
@@ -18,6 +17,8 @@ import Booking from "@/pages/Booking";
 import Homepage from "@/pages/Homepage";
 import Success from "@/pages/Payment/Success";
 import Fail from "@/pages/Payment/Fail";
+import { senderSidebarItems } from "./senderSidebarItems";
+import { receiverSidebarItems } from "./receiverSidebarItems";
 
 export const router = createBrowserRouter([
   {
@@ -75,11 +76,19 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    Component: withAuth(DashboardLayout, role.user as TRole),
-    path: "/user",
+    Component: withAuth(DashboardLayout, role.sender as TRole),
+    path: "/sender",
     children: [
-      { index: true, element: <Navigate to="/user/bookings" /> },
-      ...generateRoutes(userSidebarItems),
+      { index: true, element: <Navigate to="/sender/bookings" /> },
+      ...generateRoutes(senderSidebarItems),
+    ],
+  },
+  {
+    Component: withAuth(DashboardLayout, role.sender as TRole),
+    path: "/receiver",
+    children: [
+      { index: true, element: <Navigate to="/receiver/parcel" /> },
+      ...generateRoutes(receiverSidebarItems),
     ],
   },
   // {

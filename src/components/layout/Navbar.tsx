@@ -1,157 +1,208 @@
-import Logo from "@/assets/images/logo/logo.png";
-import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ModeToggle } from "./ModeToggler";
-import { Link } from "react-router";
-import {
-  authApi,
-  useLogoutMutation,
-  useUserInfoQuery,
-} from "@/redux/features/auth/auth.api";
+
+import React, { useEffect, useState } from "react";
+import logo from "../../assets/images/logo/logo.png";
+import { Link, NavLink } from "react-router";
+import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
+import { ModeToggle } from "./ModeToggler";
+import { Button } from "../ui/button";
 import { role } from "@/constants/role";
-import React from "react";
+import { FaFacebookF, FaLinkedinIn, FaPhone, FaYoutube } from "react-icons/fa";
+import { IoLogoInstagram } from "react-icons/io5";
+import { MdOutlineEmail } from "react-icons/md";
 
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: "/", label: "Home", role: "PUBLIC" },
-  { href: "/about", label: "About", role: "PUBLIC" },
-  { href: "/tours", label: "Tours", role: "PUBLIC" },
-  { href: "/admin", label: "Dashboard", role: role.admin },
-  { href: "/admin", label: "Dashboard", role: role.superAdmin },
-  { href: "/user", label: "Dashboard", role: role.user },
-];
-
-export default function Navbar() {
+const Navbar = () => {
+  const [navToggle, setNavToggle] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   const { data } = useUserInfoQuery(undefined);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleLogout = async () => {
     await logout(undefined);
     dispatch(authApi.util.resetApiState());
   };
 
+  // Navigation links array to be used in both desktop and mobile menus
+  const navigationLinks = [
+    { href: "/", label: "Home", role: "PUBLIC" },
+    { href: "/about", label: "About", role: "PUBLIC" },
+    { href: "/tours", label: "Tours", role: "PUBLIC" },
+    { href: "/admin", label: "Dashboard", role: role.admin },
+    { href: "/admin", label: "Dashboard", role: role.superAdmin },
+    { href: "/sender", label: "Dashboard", role: role.sender },
+    { href: "/receiver", label: "Dashboard", role: role.receiver },
+    { href: "/team", label: "Our Team", role: "PUBLIC" },
+    { href: "/contact", label: "Contact Us", role: "PUBLIC" },
+  ];
+
+console.log(navigationLinks)
   return (
-    <header className="border-b">
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
-        {/* Left side */}
-        <div className="flex items-center gap-2">
-          {/* Mobile menu trigger */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                className="group size-8 md:hidden"
-                variant="ghost"
-                size="icon"
-              >
-                <svg
-                  className="pointer-events-none"
-                  width={16}
-                  height={16}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  xmlns="http://www.w3.org/2000/svg"
+    <header>
+      <nav className={`z-40  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-[#00000000]"}`}>
+        <div className={`nav_top text-white bg-primary py-2 ${isSticky ? " hidden" : "hidden md:block"}`}>
+          <div className="main-container flex items-center justify-between">
+            <div className="email_and_number flex items-center gap-8">
+              <p className="flex items-center gap-2 text-white">
+                <span><FaPhone /></span>
+                <span>+09639222888</span>
+              </p>
+              <p className="flex items-center gap-2 text-white">
+                <span className="text-xl"><MdOutlineEmail /></span>
+                <span>hello@cjus.ngo</span>
+              </p>
+            </div>
+            <div className="social_media_link">
+              <div className="flex items-center gap-3">
+                <span>Follow Us:</span>
+                <a href="https://www.facebook.com/joltorongo.awt" className="flex items-center justify-center transition text-white text-base">
+                  <FaFacebookF />
+                </a>
+                <a href="https://www.instagram.com/jol.torongo.coxbazar" className="flex items-center justify-center transition text-white text-base">
+                  <IoLogoInstagram />
+                </a>
+                <a href="https://www.linkedin.com/company/joltorongo" className="flex items-center justify-center transition text-white text-base">
+                  <FaLinkedinIn />
+                </a>
+                <a
+                  href="https://www.youtube.com/@JoltorongoAWT"
+                  className="flex items-center justify-center transition text-white text-base"
                 >
-                  <path
-                    d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
-                  />
-                </svg>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-36 p-1 md:hidden">
-              <NavigationMenu className="max-w-none *:w-full">
-                <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink asChild className="py-1.5">
-                        <Link to={link.href}>{link.label} </Link>
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </PopoverContent>
-          </Popover>
-          {/* Main nav */}
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
-              {/* <Logo /> */}
-              <img src={Logo} alt="logo" className="w-20" />
-            </a>
-            {/* Navigation menu */}
-            <NavigationMenu className="max-md:hidden">
-              <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <React.Fragment key={index}>
-                    {link.role === "PUBLIC" && (
-                      <NavigationMenuItem>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                        >
-                          <Link to={link.href}>{link.label}</Link>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )}
-                    {link.role === data?.data?.role && (
-                      <NavigationMenuItem>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                        >
-                          <Link to={link.href}>{link.label}</Link>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )}
-                  </React.Fragment>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
+                  <FaYoutube />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          <ModeToggle />
-          {data?.data?.email && (
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              className="text-sm"
-            >
-              Logout
-            </Button>
-          )}
-          {!data?.data?.email && (
-            <Button asChild className="text-sm">
-              <Link to="/login">Login</Link>
-            </Button>
-          )}
+        <div className={`main-container flex justify-between items-center`}>
+          {/* Logo side here >>>>>>>>>>>>>>>> */}
+          <div className="nav_logo_side">
+            <Link className="flex flex-col items-center" to="/">
+              <img
+                src={logo}
+                alt="logo"
+                width={200}
+                height={100}
+                className="w-20"
+              />
+              {/* <span className="text-primary text-xs uppercase font-bold">Books Finder</span> */}
+            </Link>
+          </div>
+          {/* NAv manu side here >>>>>>>>>>>>>>>> */}
+          <div className={`absolute ${navToggle ? "left-0" : "left-[-120%] w-1/2 "
+            } top-[4.9rem] flex w-full shadow md:shadow-none flex-col py-2 transition-all duration-300  lg:static lg:w-[unset] lg:flex-row  lg:bg-transparent lg:pb-0 lg:pt-0 `}
+          >
+            <ul className="capitalize flex pb-20 md:pb-0 pl-10 md:pl-0 flex-col lg:flex-row items-start md:items-center justify-center gap-5 md:gap-3 px-1">
+              {
+                navigationLinks.map((link, index) => {
+                  return (
+                    <React.Fragment key={index}>
+                      {
+                        link.role === "PUBLIC" && (
+                          <li className=" md:mx-2 py-2 lg:py-6 relative">
+                            <NavLink
+                              onClick={() => setNavToggle(false)}
+                              to={link.href}
+                              className={`flex font-semibold transition uppercase text-sm items-center gap-2  hover:text-primary`}
+                            >
+                              {link.label}
+                            </NavLink>
+                          </li>
+                        )
+                      }
+                      {
+                        link.role === data?.data?.role && (
+                          <li className=" md:mx-2 py-2 lg:py-6 relative">
+                            <NavLink
+                              onClick={() => setNavToggle(false)}
+                              to={link.href}
+                              className={`flex font-semibold transition uppercase text-sm items-center gap-2  hover:text-primary`}
+                            >
+                              {link.label}
+                            </NavLink>
+                          </li>
+                        )
+                      }
+                    </React.Fragment>
+                  )
+                })}
+            </ul>
+          </div>
+          {/* Right side here >>>>>>>>>>>>>>>> */}
+          <div className="nav_right_side hidden lg:block ">
+            <div className="flex justify-end items-center gap-2">
+              <ModeToggle />
+              {data?.data?.email && (
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="text-sm"
+                >
+                  Logout
+                </Button>
+              )}
+              {!data?.data?.email && (
+                <Button asChild className="text-sm">
+                  <Link to="/login">Login</Link>
+                </Button>
+              )}
+            </div>
+          </div>
+          {/* Right toggle bar for mobile  */}
+          {/* Mobile Toggle Button */}
+          <div className="lg:hidden">
+            <label className="cursor-pointer">
+              <input
+                type="checkbox"
+                className="hidden"
+                checked={navToggle}
+                onChange={() => setNavToggle((prev) => !prev)}
+              />
+              {navToggle ? (
+                <svg
+                  className="fill-current text-[#009672]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 512 512"
+                >
+                  <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+                </svg>
+              ) : (
+                <svg
+                  className="fill-current text-[#009672]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                </svg>
+              )}
+            </label>
+          </div>
         </div>
-      </div>
+      </nav>
     </header>
   );
-}
+};
+
+export default Navbar;

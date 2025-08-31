@@ -21,11 +21,6 @@ export function LoginForm({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
   const form = useForm({
-    //! For development only
-    defaultValues: {
-      email: "mirhussainmurtaza@gmail.com",
-      password: "12345678",
-    },
   });
   const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -38,15 +33,7 @@ export function LoginForm({
       }
     } catch (err) {
       console.error(err);
-
-      if (err.data.message === "Password does not match") {
-        toast.error("Invalid credentials");
-      }
-
-      if (err.data.message === "User is not verified") {
-        toast.error("Your account is not verified");
-        navigate("/verify", { state: data.email });
-      }
+      toast.error(`${err.data.message}`);
     }
   };
 
@@ -69,7 +56,7 @@ export function LoginForm({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="john@example.com"
+                      placeholder="sernder@gmail.com"
                       {...field}
                       value={field.value || ""}
                     />
