@@ -51,3 +51,22 @@ export interface IErrorResponse {
   };
   stack?: string;
 }
+
+export interface IAuth {
+  provider: "credentials" | "google" | string;
+  providerId: string;
+}
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  isDeleted: boolean;
+  isActive: "ACTIVE" | "INACTIVE" | "BLOCKED";
+  isVerified: boolean;
+  role: "SENDER" | "RECEIVER" | "ADMIN" | "SUPER_ADMIN";
+  auths: IAuth[];
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
