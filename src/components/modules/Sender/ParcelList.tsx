@@ -22,19 +22,23 @@ export function ParcelList() {
                   <TableCaption>A list of your recent parcels.</TableCaption>
                   <TableHeader>
                         <TableRow>
-                              <TableHead className="w-[100px]">parcel</TableHead>
-                              <TableHead>Status</TableHead>
-                              <TableHead>Method</TableHead>
-                              <TableHead className="text-right">Amount</TableHead>
+                              <TableHead className="w-[100px]">Type</TableHead>
+                              <TableHead>Weight</TableHead>
+                              <TableHead>Delivery Date</TableHead>
+                              <TableHead>Tracking Id</TableHead>
+                              <TableHead className="text-right">Address</TableHead>
+                              <TableHead className="text-right">Status</TableHead>
                         </TableRow>
                   </TableHeader>
                   <TableBody>
                         {data.map((parcel: IParcel) => (
-                              <TableRow key={parcel.type}>
+                              <TableRow key={parcel._id}>
+                                    <TableCell className="font-medium">{parcel.type}</TableCell>
                                     <TableCell className="font-medium">{parcel.weight}</TableCell>
-                                    <TableCell>{parcel.address}</TableCell>
-                                    <TableCell>{parcel.fee}</TableCell>
                                     <TableCell className="text-right">{parcel.deliveryDate}</TableCell>
+                                    <TableCell>{parcel.trackingId}</TableCell>
+                                    <TableCell>{parcel.address}</TableCell>
+                                    <TableCell>{parcel.status}</TableCell>
                               </TableRow>
                         ))}
                   </TableBody>

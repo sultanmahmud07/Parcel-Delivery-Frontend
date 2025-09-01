@@ -1,6 +1,4 @@
 import { baseApi } from "@/redux/baseApi";
-import { IResponse, } from "@/types";
-import { IParcel } from "@/types/parcel.type";
 
 export const parcelApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
@@ -28,14 +26,14 @@ export const parcelApi = baseApi.injectEndpoints({
                   providesTags: ["PARCEL"],
                   transformResponse: (response) => response.data,
             }),
-            getAllParcels: builder.query<IParcel[], unknown>({
+            getAllParcels: builder.query({
                   query: (params) => ({
                         url: "/parcel/all-parcel",
                         method: "GET",
                         params: params,
                   }),
                   providesTags: ["PARCEL"],
-                  transformResponse: (response: IResponse<IParcel[]>) => response.data,
+                  transformResponse: (response) => response,
             }),
       }),
 });

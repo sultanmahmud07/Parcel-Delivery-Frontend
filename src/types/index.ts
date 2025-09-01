@@ -9,6 +9,19 @@ export interface IResponse<T> {
   message: string;
   data: T;
 }
+export interface IMeta {
+    limit: number;
+    page: number;
+    total: number;
+    totalPage: number;
+  }
+export interface IResponseWithMeta<T> {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  meta: IMeta
+  data: T;
+}
 export interface IApiError {
   status: number;
   data: {
@@ -26,7 +39,7 @@ export interface ISidebarItem {
   }[];
 }
 
-export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER";
+export type TRole = "SUPER_ADMIN" | "ADMIN" | "SENDER" | "RECEIVER" | "USER";
 
 type ZodIssue = {
   code: string;
@@ -65,8 +78,8 @@ export interface IUser {
   isDeleted: boolean;
   isActive: "ACTIVE" | "INACTIVE" | "BLOCKED";
   isVerified: boolean;
-  role: "SENDER" | "RECEIVER" | "ADMIN" | "SUPER_ADMIN";
+  role: TRole;
   auths: IAuth[];
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
+  createdAt: string; 
+  updatedAt: string;
 }
