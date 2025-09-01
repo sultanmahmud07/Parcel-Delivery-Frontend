@@ -1,4 +1,4 @@
-export interface IParcelPackage {
+export interface IParcel {
   _receiver: string
   type: string
   weight: number

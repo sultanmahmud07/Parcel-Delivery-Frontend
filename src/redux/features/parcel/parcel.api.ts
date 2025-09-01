@@ -1,6 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
 import { IResponse, } from "@/types";
-import { IParcelPackage } from "@/types/parcel.type";
+import { IParcel } from "@/types/parcel.type";
 
 export const parcelApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
@@ -19,7 +19,7 @@ export const parcelApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ["PARCEL"],
             }),
-            getParcel: builder.query({
+            getParcelBySender: builder.query({
                   query: (params) => ({
                         url: "/parcel/sender",
                         method: "GET",
@@ -28,14 +28,14 @@ export const parcelApi = baseApi.injectEndpoints({
                   providesTags: ["PARCEL"],
                   transformResponse: (response) => response.data,
             }),
-            getAllParcels: builder.query<IParcelPackage[], unknown>({
+            getAllParcels: builder.query<IParcel[], unknown>({
                   query: (params) => ({
                         url: "/parcel/all-parcel",
                         method: "GET",
                         params: params,
                   }),
                   providesTags: ["PARCEL"],
-                  transformResponse: (response: IResponse<IParcelPackage[]>) => response.data,
+                  transformResponse: (response: IResponse<IParcel[]>) => response.data,
             }),
       }),
 });
@@ -43,6 +43,6 @@ export const parcelApi = baseApi.injectEndpoints({
 export const {
       useAddParcelMutation,
       useRemoveParcelMutation,
-      useGetParcelQuery,
+      useGetParcelBySenderQuery,
       useGetAllParcelsQuery,
 } = parcelApi;
