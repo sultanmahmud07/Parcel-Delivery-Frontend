@@ -84,6 +84,10 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/admin/analytics" /> },
       ...generateRoutes(adminSidebarItems),
+         {
+        path: "/admin/parcel/:id",
+        Component: ParcelDetails,
+      },
     ],
   },
   {

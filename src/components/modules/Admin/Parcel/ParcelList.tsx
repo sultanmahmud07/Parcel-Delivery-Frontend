@@ -17,38 +17,37 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-      useRemoveTourTypeMutation,
-} from "@/redux/features/Tour/tour.api";
-import { Trash2 } from "lucide-react";
+import { EyeIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useGetAllParcelsQuery } from "@/redux/features/parcel/parcel.api";
+import { useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
 import { IParcel } from "@/types/parcel.type";
+import { Link } from "react-router";
 
 export default function ParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
-      const [limit] = useState(5);
-
+      const [limit] = useState(10);
       const { data } = useGetAllParcelsQuery({ page: currentPage, limit });
-      const [removeTourType] = useRemoveTourTypeMutation();
+      const [removeParcel] = useRemoveParcelMutation();
 
-      const handleRemoveTourType = async (tourId: string) => {
+      const handleRemoveParcel = async (parcelId: string) => {
             const toastId = toast.loading("Removing...");
             try {
-                  const res = await removeTourType(tourId).unwrap();
+                  const res = await removeParcel(parcelId).unwrap();
 
                   if (res.success) {
-                        toast.success("Removed", { id: toastId });
+                        toast.success("Parcel remove successfully!");
+                        toast.dismiss(toastId);
                   }
             } catch (err) {
+                  toast.dismiss(toastId);
                   console.error(err);
             }
       };
 
       const totalPage = data?.meta?.totalPage || 1;
-      console.log(data)
-      //* Total page 2 => [0, 0]
+      // console.log(data)
+
 
       return (
             <div className="w-full ">
@@ -72,14 +71,19 @@ export default function ParcelList() {
                                           <TableCell className="text-right">{parcel.deliveryDate}</TableCell>
                                           <TableCell>{parcel.trackingId}</TableCell>
                                           <TableCell>{parcel.address}</TableCell>
-                                          <TableCell>  
-                                                 <DeleteConfirmation
-                                                            onConfirm={() => handleRemoveTourType(parcel._id)}
-                                                      >
-                                                            <Button size="sm">
-                                                                  <Trash2 />
-                                                            </Button>
-                                                      </DeleteConfirmation></TableCell>
+                                          <TableCell className="flex items-center justify-end gap-2">
+                                                <Link className="cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
+                                                 <Button size="sm">
+                                                            <EyeIcon />
+                                                      </Button>
+                                                </Link>
+                                                <DeleteConfirmation
+                                                      onConfirm={() => handleRemoveParcel(parcel._id)}
+                                                >
+                                                      <Button size="sm">
+                                                            <Trash2 />
+                                                      </Button>
+                                                </DeleteConfirmation></TableCell>
                                     </TableRow>
                               ))}
                         </TableBody>
@@ -105,7 +109,7 @@ export default function ParcelList() {
                                                                   key={page}
                                                                   onClick={() => setCurrentPage(page)}
                                                             >
-                                                                  <PaginationLink isActive={currentPage === page}>
+                                                                  <PaginationLink className="cursor-pointer" isActive={currentPage === page}>
                                                                         {page}
                                                                   </PaginationLink>
                                                             </PaginationItem>
