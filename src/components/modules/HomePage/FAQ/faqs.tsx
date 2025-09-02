@@ -4,30 +4,45 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 
 const faqs = [
   {
-    question: "How do I borrow a book?",
+    question: "How do I create a new parcel delivery request?",
     answer:
-      "To borrow a book, go to the 'All Books' page, click the borrow icon on your desired book, select quantity and due date, and submit the form. Make sure enough copies are available.",
+      "Go to the 'Create Parcel' page, fill in the sender and receiver details, parcel type, weight, and delivery instructions, then submit the form. You will receive a unique tracking ID for your parcel.",
   },
   {
-    question: "Can I add or edit book details?",
+    question: "How can I track my parcel?",
     answer:
-      "Yes! You can add a new book using the 'Create Book' button. To edit, use the pencil icon next to the book entry and update the fields as needed.",
+      "Use the 'Track Parcel' feature and enter your tracking ID. You will see the current status, history of updates, and expected delivery time for your parcel.",
   },
   {
-    question: "What happens when a book has 0 copies?",
+    question: "Can I update parcel information after creation?",
     answer:
-      "If the number of copies is set to 0, the book will be marked as unavailable and cannot be borrowed until more copies are added.",
+      "Yes, admins and senders can update parcel details like receiver information or delivery instructions before the parcel is dispatched. Changes cannot be made once the parcel is in transit.",
   },
   {
-    question: "Where can I see the borrowing summary?",
+    question: "What happens if the parcel is delayed?",
     answer:
-      "You can view the borrow summary on the 'Borrow Summary' page. It displays all borrowed books and the total quantity borrowed for each.",
+      "You can track the parcel in real-time. If a delay occurs, the status will reflect it. Contact support if you need further assistance or rescheduling.",
   },
   {
-    question: "Can I delete a book from the system?",
+    question: "Can I cancel a parcel delivery?",
     answer:
-      "Yes, use the trash icon next to any book to delete it. You'll be asked to confirm the action before the book is removed permanently.",
+      "Yes, parcels that have not yet been dispatched can be canceled by the sender. Once a parcel is in transit, cancellation is not allowed.",
   },
+  {
+    question: "How do I see all parcels I sent or received?",
+    answer:
+      "Go to the 'My Parcels' page. It lists all parcels you have sent or are set to receive, along with their current status and tracking history.",
+  },
+  // {
+  //   question: "Who can access parcel details?",
+  //   answer:
+  //     "Senders, receivers, and admins have access to parcel details. Sensitive information is restricted based on your role in the system.",
+  // },
+  // {
+  //   question: "Is there a limit on parcel weight or type?",
+  //   answer:
+  //     "Yes, each parcel type has predefined weight limits. Make sure your parcel complies with the system's rules to avoid rejection.",
+  // },
 ];
 
 

@@ -2,6 +2,7 @@ import about1 from '../../../../assets/images/international-courier-service.jpeg
 import about2 from '../../../../assets/images/about-img.jpg'
 import aboutIcon from '../../../../assets/images/delivery-icon.png'
 import { FaHeart, FaEye } from 'react-icons/fa'
+import { Link } from 'react-router'
 
 const About = () => {
   return (
@@ -28,63 +29,71 @@ const About = () => {
           </div>
 
           {/* Right Content */}
-          <div>
-            <h5 className='text-primary font-bold uppercase my-2 text-sm'>Welcome to Charity</h5>
-            <h1 className='font-semibold text-3xl md:text-4xl leading-snug mb-4'>
-              Let Us Come Together <br />To Make a Difference
-            </h1>
-            <p className="text my-5">
-              Join us and make your life more valuable and useful, be a part of us and contribute to the nation and state and the simplest for the environment and yourself
-            </p>
+         <div>
+  <h5 className='text-primary font-bold uppercase my-2 text-sm'>Welcome to SwiftParcel</h5>
+  <h1 className='font-semibold text-3xl md:text-4xl leading-snug mb-4'>
+    Reliable Delivery <br /> Across the Nation
+  </h1>
+  <p className="text my-5">
+    Experience fast, secure, and affordable parcel services. From documents to heavy shipments, 
+    we ensure your deliveries reach the right place at the right time.
+  </p>
 
-            {/* Mission + Vision */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-secondary p-3 rounded">
-              <h5 className="my-2 flex items-center gap-2 font-semibold text-lg text-primary"><span><FaHeart /></span>Our Mission</h5>
-                  <p className="text-sm">
-                    CJUS is committed to empowering vulnerable communities by implementing impactful programs.
-                  </p>
-              </div>
-              <div className="bg-secondary p-3 rounded">
-              <h5 className="my-2 flex items-center gap-2 font-semibold text-lg text-primary"><span><FaEye /></span>Our vission</h5>
-                  <p className="text-sm">
-                  A world where every person has access to basic human rights, social justice, and sustainable development opportunities
-                  </p>
-              </div>
-            </div>
+  {/* Mission + Vision */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div className="bg-secondary p-3 rounded">
+      <h5 className="my-2 flex items-center gap-2 font-semibold text-lg text-primary">
+        <span><FaHeart /></span>Our Mission
+      </h5>
+      <p className="text-sm">
+        To simplify parcel delivery with technology-driven solutions and trusted logistics support. 
+      </p>
+    </div>
+    <div className="bg-secondary p-3 rounded">
+      <h5 className="my-2 flex items-center gap-2 font-semibold text-lg text-primary">
+        <span><FaEye /></span>Our Vision
+      </h5>
+      <p className="text-sm">
+        To become the most reliable and customer-friendly courier service, connecting businesses and people everywhere.
+      </p>
+    </div>
+  </div>
 
-            {/* Progress Bars */}
-            <div className="space-y-4">
-              {/* Donations */}
-              <div>
-                <div className="flex justify-between mb-1 font-semibold text-sm">
-                  <span>Donations</span>
-                  <span>75%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: '75%' }}></div>
-                </div>
-              </div>
+  {/* Progress Bars */}
+  <div className="space-y-4">
+    {/* On-Time Delivery */}
+    <div>
+      <div className="flex justify-between mb-1 font-semibold text-sm">
+        <span>On-Time Delivery</span>
+        <span>95%</span>
+      </div>
+      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-full bg-primary rounded-full" style={{ width: '95%' }}></div>
+      </div>
+    </div>
 
-              {/* Medical Help */}
-              <div>
-                <div className="flex justify-between mb-1 font-semibold text-sm">
-                  <span>Medical Help</span>
-                  <span>90%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: '90%' }}></div>
-                </div>
-              </div>
-            </div>
+    {/* Customer Satisfaction */}
+    <div>
+      <div className="flex justify-between mb-1 font-semibold text-sm">
+        <span>Customer Satisfaction</span>
+        <span>88%</span>
+      </div>
+      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-full bg-primary rounded-full" style={{ width: '88%' }}></div>
+      </div>
+    </div>
+  </div>
 
-            {/* About Us Button */}
-            <div className="mt-6">
-              <button className="bg-primary text-white px-6 py-2 rounded-md text-sm font-semibold shadow">
-                About Us
-              </button>
-            </div>
-          </div>
+  {/* About Us Button */}
+  <div className="mt-6">
+    <Link to={"/about"}>
+    <button className="bg-primary cursor-pointer text-white px-6 py-2 rounded-md text-sm font-semibold shadow">
+      About Us
+    </button>
+    </Link>
+  </div>
+</div>
+
         </div>
       </div>
     </div>

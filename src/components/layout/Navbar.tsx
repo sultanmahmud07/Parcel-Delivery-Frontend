@@ -30,7 +30,7 @@ const Navbar = () => {
 
     window.addEventListener('scroll', handleScroll);
 
-    // Clean up the event listener when the component unmounts
+   
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -41,11 +41,9 @@ const Navbar = () => {
     dispatch(authApi.util.resetApiState());
   };
 
-  // Navigation links array to be used in both desktop and mobile menus
   const navigationLinks = [
     { href: "/", label: "Home", role: "PUBLIC" },
     { href: "/about", label: "About", role: "PUBLIC" },
-    { href: "/tours", label: "Tours", role: "PUBLIC" },
     { href: "/team", label: "Our Team", role: "PUBLIC" },
     { href: "/track", label: "Tracking", role: "PUBLIC" },
     { href: "/contact", label: "Contact Us", role: "PUBLIC" },
