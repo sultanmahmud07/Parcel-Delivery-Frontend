@@ -14,7 +14,7 @@ const ParcelDetails = () => {
     return <div className="text-center py-10">Loading...</div>;
   }
 
-  const parcel = data?.data[0];
+  const parcel = data?.data;
   if (!parcel) {
     return <div className="text-center py-10">Parcel not found</div>;
   }
@@ -61,6 +61,16 @@ const ParcelDetails = () => {
               <p className="font-medium">{parcel.address}</p>
             </div>
             <div>
+              <p className="text-sm text-gray-500">Sender Data</p>
+              <p className="font-medium">{parcel.sender?.name}</p>
+              <p className="font-medium">{parcel.sender?.email}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Receiver Data</p>
+              <p className="font-medium">{parcel.receiver?.name}</p>
+              <p className="font-medium">{parcel.receiver?.email}</p>
+            </div>
+            <div>
               <p className="text-sm text-gray-500">Delivery Date</p>
               <p className="font-medium">{formatDate(parcel.deliveryDate)}</p>
             </div>
@@ -84,7 +94,7 @@ const ParcelDetails = () => {
                   <div>
                     <p className="font-medium">{log.status}</p>
                     <p className="text-sm text-gray-500">
-                      by {log.updatedBy} • {format(new Date(log.timestamp), "PPP p")}
+                      by <span className="uppercase text-primary">{log.updatedBy || "N/A"}</span> • {format(new Date(log.timestamp), "PPP p")}
                     </p>
                   </div>
                 </div>
