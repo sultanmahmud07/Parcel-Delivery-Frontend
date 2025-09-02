@@ -1,6 +1,7 @@
 import About from "@/components/modules/HomePage/About/About";
 import CommonBanner from "./CommonBanner";
 import AboutUs from "@/components/modules/About/AboutUs/AboutUs";
+import OurTeamSlider from "@/components/modules/OurTeam/OurTeamSlider";
 
 export default function AboutPage() {
   return (
@@ -9,6 +10,7 @@ export default function AboutPage() {
         <CommonBanner title={"About Us"}></CommonBanner>
         <About></About>
         <AboutUs></AboutUs>
+        <OurTeamSlider></OurTeamSlider>
       </div>
     </>
   );

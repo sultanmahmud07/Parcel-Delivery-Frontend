@@ -47,6 +47,7 @@ const Navbar = () => {
     { href: "/about", label: "About", role: "PUBLIC" },
     { href: "/tours", label: "Tours", role: "PUBLIC" },
     { href: "/team", label: "Our Team", role: "PUBLIC" },
+    { href: "/track", label: "Tracking", role: "PUBLIC" },
     { href: "/contact", label: "Contact Us", role: "PUBLIC" },
     { href: "/admin", label: "Dashboard", role: role.admin },
     { href: "/admin", label: "Dashboard", role: role.superAdmin },
@@ -107,7 +108,7 @@ const Navbar = () => {
           </div>
           {/* NAv manu side here >>>>>>>>>>>>>>>> */}
           <div className={`absolute ${navToggle ? "left-0" : "left-[-120%] w-1/2 "
-            } top-[4.9rem] flex w-full shadow md:shadow-none flex-col py-2 transition-all duration-300  lg:static lg:w-[unset] lg:flex-row  lg:bg-transparent lg:pb-0 lg:pt-0 `}
+            } top-[5.2rem] flex w-full shadow md:shadow-none flex-col py-2 transition-all duration-300  lg:static lg:w-[unset] lg:flex-row  bg-background lg:bg-transparent lg:pb-0 lg:pt-0 `}
           >
             <ul className="capitalize flex pb-20 md:pb-0 pl-10 md:pl-0 flex-col lg:flex-row items-start md:items-center justify-center gap-5 md:gap-3 px-1">
               {
@@ -177,7 +178,7 @@ const Navbar = () => {
               />
               {navToggle ? (
                 <svg
-                  className="fill-current text-[#009672]"
+                  className="fill-current text-primary"
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
                   height="28"
@@ -187,7 +188,7 @@ const Navbar = () => {
                 </svg>
               ) : (
                 <svg
-                  className="fill-current text-[#009672]"
+                  className="fill-current text-primary"
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
                   height="28"

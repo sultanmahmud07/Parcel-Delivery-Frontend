@@ -21,7 +21,8 @@ import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSidebarItems";
 import ParcelDetails from "@/pages/Sender/ParcelDetails";
 import Contact from "@/pages/ContactPage";
-import OurTeam from "@/pages/OurTeam";
+import TrackingParcelPage from "@/pages/TrackingParcelPage";
+import OurTeamPage from "@/pages/OurTeamPage";
 
 export const router = createBrowserRouter([
   {
@@ -41,8 +42,12 @@ export const router = createBrowserRouter([
         path: "contact",
       },
       {
-        Component: OurTeam,
+        Component: OurTeamPage,
         path: "team",
+      },
+      {
+        Component: TrackingParcelPage,
+        path: "track",
       },
       {
         Component: Tours,
