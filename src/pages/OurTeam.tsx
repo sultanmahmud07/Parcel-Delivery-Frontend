@@ -1,7 +1,12 @@
+import TeamInfo from "@/components/modules/OurTeam/TeamInfo"
+import CommonBanner from "./CommonBanner"
 
 const OurTeam = () => {
   return (
-    <div>OurTeam</div>
+    <div>
+      <CommonBanner title="Meet Our Team"></CommonBanner>
+      <TeamInfo></TeamInfo>
+    </div>
   )
 }
 

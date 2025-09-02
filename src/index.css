@@ -126,3 +126,7 @@
 .active{
   color: var(--primary);
 }
+
+.achieve_top_section {
+  background-color: var(--popover);
+}

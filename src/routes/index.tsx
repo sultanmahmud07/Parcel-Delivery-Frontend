@@ -1,6 +1,6 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import About from "@/pages/About";
+import About from "@/pages/AboutPage";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Verify from "@/pages/Verify";
@@ -20,7 +20,7 @@ import Fail from "@/pages/Payment/Fail";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSidebarItems";
 import ParcelDetails from "@/pages/Sender/ParcelDetails";
-import Contact from "@/pages/Contact";
+import Contact from "@/pages/ContactPage";
 import OurTeam from "@/pages/OurTeam";
 
 export const router = createBrowserRouter([

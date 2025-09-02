@@ -1,10 +1,14 @@
+import About from "@/components/modules/HomePage/About/About";
+import Banner from "@/components/modules/HomePage/Banner";
 import FAQ from "@/components/modules/HomePage/FAQ/FAQ";
-import HeroSection from "@/components/modules/HomePage/HeroSection";
+import OurAchievement from "@/components/modules/HomePage/OurAchivment/OurAchivment";
 
 export default function Homepage() {
   return (
     <div>
-      <HeroSection />
+      <Banner></Banner>
+      <About></About>
+      <OurAchievement></OurAchievement>
       <FAQ></FAQ>
     </div>
   );
