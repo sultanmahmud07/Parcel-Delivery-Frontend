@@ -10,6 +10,14 @@ export const parcelApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ["PARCEL"],
             }),
+            updateParcelByAdmin: builder.mutation({
+                  query: ({ parcelId, parcelInfo }) => ({
+                        url: `/parcel/status/${parcelId}`,
+                        method: "PATCH",
+                        data: parcelInfo, 
+                  }),
+                  invalidatesTags: ["PARCEL"],
+            }),
             removeParcel: builder.mutation({
                   query: (parcelId) => ({
                         url: `/parcel/${parcelId}`,
@@ -47,6 +55,7 @@ export const parcelApi = baseApi.injectEndpoints({
 
 export const {
       useAddParcelMutation,
+      useUpdateParcelByAdminMutation,
       useRemoveParcelMutation,
       useGetParcelBySenderQuery,
       useGetParcelDetailsQuery,

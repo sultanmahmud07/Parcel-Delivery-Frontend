@@ -22,3 +22,9 @@ export interface IParcelResponse {
   meta: IMeta
   data: IParcel[];
 }
+
+export interface IStatusLog {
+  status: string
+  updatedBy: string
+  timestamp: string
+}

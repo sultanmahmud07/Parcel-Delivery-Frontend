@@ -23,6 +23,7 @@ import { useState } from "react";
 import { useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
 import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
+import { ParcelActionMenu } from "./ParcelActionMenu";
 
 export default function ParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
@@ -84,6 +85,7 @@ export default function ParcelList() {
                                                             <Trash2 />
                                                       </Button>
                                                 </DeleteConfirmation></TableCell>
+                                                <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
                                     </TableRow>
                               ))}
                         </TableBody>

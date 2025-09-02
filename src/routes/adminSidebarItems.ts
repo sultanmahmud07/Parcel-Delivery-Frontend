@@ -23,38 +23,38 @@ export const adminSidebarItems: ISidebarItem[] = [
     title: "Parcel Management",
     items: [
       {
-        title: "Parcel List",
+        title: "Pending Parcels",
+        url: "/admin/parcel/pending",
+        component: Parcels,
+      },
+      {
+        title: "All Parcels",
         url: "/admin/parcels",
         component: Parcels,
       },
       {
-        title: "Add Division",
-        url: "/admin/add-division",
+        title: "Add Parcel",
+        url: "/admin/parcel/create",
         component: AddDivision,
-      },
-      {
-        title: "Add Tour",
-        url: "/admin/add-tour",
-        component: AddTour,
-      },
+      }
     ],
   },
   {
-    title: "Tour Management",
+    title: "User Management",
     items: [
       {
-        title: "Add Tour Type",
-        url: "/admin/add-tour-type",
+        title: "All Users",
+        url: "/admin/user",
         component: AddTourType,
       },
       {
-        title: "Add Division",
-        url: "/admin/add-division",
+        title: "Blocked Users",
+        url: "/admin/blocked-users",
         component: AddDivision,
       },
       {
-        title: "Add Tour",
-        url: "/admin/add-tour",
+        title: "All Admins",
+        url: "/admin/admins",
         component: AddTour,
       },
     ],
