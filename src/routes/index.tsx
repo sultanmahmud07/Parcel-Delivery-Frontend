@@ -23,6 +23,7 @@ import ParcelDetails from "@/pages/Sender/ParcelDetails";
 import Contact from "@/pages/ContactPage";
 import TrackingParcelPage from "@/pages/TrackingParcelPage";
 import OurTeamPage from "@/pages/OurTeamPage";
+import UserDetails from "@/components/modules/Admin/User/UserDetails";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
         path: "/admin/parcel/:id",
         Component: ParcelDetails,
       },
+         {
+        path: "/admin/user/:id",
+        Component: UserDetails,
+      },
     ],
   },
   {
@@ -119,26 +124,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   Component: Login,
-  //   path: "/login",
-  // },
-  // {
-  //   Component: Register,
-  //   path: "/register",
-  // },
-  // {
-  //   Component: Verify,
-  //   path: "/verify",
-  // },
-  // {
-  //   Component: Unauthorized,
-  //   path: "/unauthorized",
-  // },
-  // {
-  //   Component: Success,
-  //   path: "/payment/success",
-  // },
   {
     Component: Fail,
     path: "/payment/fail",

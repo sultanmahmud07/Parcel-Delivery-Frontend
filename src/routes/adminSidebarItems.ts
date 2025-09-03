@@ -1,3 +1,6 @@
+import DeletedUserList from "@/components/modules/Admin/User/DeletedUser";
+import AllUnauthorUserList from "@/components/modules/Admin/User/UnauthorUser";
+import AllUserList from "@/components/modules/Admin/User/UserList";
 import Parcels from "@/pages/Admin/Parcels";
 // import Analytics from "@/pages/Admin/Analytics";
 import { ISidebarItem } from "@/types";
@@ -39,6 +42,21 @@ export const adminSidebarItems: ISidebarItem[] = [
   {
     title: "User Management",
     items: [
+      {
+        title: "All User",
+        url: "/admin/user/all",
+        component: AllUserList,
+      },
+      {
+        title: "Deleted User",
+        url: "/admin/user/deleted",
+        component: DeletedUserList,
+      },
+      {
+        title: "Unverified User",
+        url: "/admin/user/unverified",
+        component: AllUnauthorUserList,
+      },
     ],
   },
 ];

@@ -8,39 +8,30 @@ import {
       DropdownMenuSeparator,
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useUpdateParcelByAdminMutation } from "@/redux/features/parcel/parcel.api"
-import { useNavigate } from "react-router"
-import { IParcel } from "@/types/parcel.type"
 import { toast } from "sonner"
-import { IApiError } from "@/types"
+import { IApiError, IUser } from "@/types"
+import { useUpdateUserMutation } from "@/redux/features/user/user.api"
 import { EllipsisVertical } from "lucide-react"
 
-const parcelStatusOptions = [
-      "REQUESTED"
-      , "APPROVED"
-      , "DISPATCHED"
-      , "IN_TRANSIT"
-      , "DELIVERED"
-      , "CANCELED"
-      , "BLOCKED"
-      , "UNBLOCKED"] as const;
+const userStatusOptions = [
+      "ACTIVE"
+      , "INACTIVE"
+      , "BLOCKED"] as const;
 
-export function ParcelActionMenu({ parcel }: { parcel: IParcel }) {
-      const [updateParcelByAdmin] = useUpdateParcelByAdminMutation();
-      const navigate = useNavigate();
+export function UserActionMenu({ user }: { user: IUser }) {
+      const [updateUserByAdmin] = useUpdateUserMutation();
 
       const handleStatusUpdate = async (status: string) => {
             const toastId = toast.loading("Updating...");
-            const parcelId = parcel?._id || "";
-            const parcelInfo = {
-                  status: status
+            const userId = user?._id || "";
+            const userInfo = {
+                  isActive: status
             }
             try {
-                  const res = await updateParcelByAdmin({parcelId, parcelInfo}).unwrap();
+                  const res = await updateUserByAdmin({userId, userInfo}).unwrap();
                   if (res.success) {
                         toast.dismiss(toastId);
-                        toast.success("Parcel status updated successfully");
-                        navigate("/admin/parcels");
+                        toast.success("User status updated successfully");
                   }
             } catch (err) {
                   console.error(err);
@@ -58,10 +49,10 @@ export function ParcelActionMenu({ parcel }: { parcel: IParcel }) {
                         <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {
-                              parcelStatusOptions.map((status) => (
+                              userStatusOptions.map((status) => (
                                     <DropdownMenuCheckboxItem
                                           key={status}
-                                          checked={parcel.status === status}
+                                          checked={user?.isActive === status}
                                           onCheckedChange={() => handleStatusUpdate(status)}
                                     >
                                           {status}
