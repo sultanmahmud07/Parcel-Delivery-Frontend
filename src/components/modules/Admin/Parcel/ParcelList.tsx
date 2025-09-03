@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
       Table,
       TableBody,
-      TableCaption,
       TableCell,
       TableHead,
       TableHeader,
@@ -24,13 +23,25 @@ import { useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features
 import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
 import { ParcelActionMenu } from "./ParcelActionMenu";
+import { formatDate } from "@/utils/getDateFormater";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 export default function ParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
       const [limit] = useState(10);
-      const { data } = useGetAllParcelsQuery({ page: currentPage, limit });
+      const [searchTerm, setSearchTerm] = useState("")
+      const [sortOrder, setSortOrder] = useState("")
+      const { data, isLoading } = useGetAllParcelsQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
       const [removeParcel] = useRemoveParcelMutation();
+      const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchTerm(e.target.value)
+      }
 
+      const handleSortChange = (value: string) => {
+            setSortOrder(value)
+      }
       const handleRemoveParcel = async (parcelId: string) => {
             const toastId = toast.loading("Removing...");
             try {
@@ -52,29 +63,54 @@ export default function ParcelList() {
 
       return (
             <div className="w-full ">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
+                        <h1 className="text-2xl font-bold">All Parcels</h1>
+                        <Input
+                              className="w-full md:w-sm"
+                              type="text"
+                              placeholder="Search here.."
+                              value={searchTerm}
+                              onChange={handleSearchChange}
+                        />
+                        <Select onValueChange={handleSortChange} value={sortOrder}>
+                              <SelectTrigger className="md:w-[180px]">
+                                    <SelectValue placeholder="Select a list order" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                    <SelectGroup>
+                                          <SelectLabel>Order By</SelectLabel>
+                                          <SelectItem value="createdAt">Ascending</SelectItem>
+                                          <SelectItem value="-createdAt">Descending</SelectItem>
+                                    </SelectGroup>
+                              </SelectContent>
+                        </Select>
+                  </div>
                   <Table>
-                        <TableCaption>A list of your recent parcels.</TableCaption>
                         <TableHeader>
                               <TableRow>
-                                    <TableHead className="w-[100px]">Type</TableHead>
+                                    <TableHead className="">Type</TableHead>
                                     <TableHead>Weight</TableHead>
+                                    <TableHead>Deu Amount</TableHead>
                                     <TableHead>Delivery Date</TableHead>
-                                    <TableHead>Tracking Id</TableHead>
-                                    <TableHead className="text-right">Address</TableHead>
-                                    <TableHead className="text-right">Status</TableHead>
+                                    <TableHead className="">Address</TableHead>
+                                    <TableHead className="">Status</TableHead>
                               </TableRow>
                         </TableHeader>
+                        {
+                              isLoading ?
+                               <div>Loading...</div>
+                               :
                         <TableBody>
                               {data?.data.map((parcel: IParcel) => (
                                     <TableRow key={parcel._id}>
                                           <TableCell className="font-medium">{parcel.type}</TableCell>
                                           <TableCell className="font-medium">{parcel.weight}</TableCell>
-                                          <TableCell className="text-right">{parcel.deliveryDate}</TableCell>
-                                          <TableCell>{parcel.trackingId}</TableCell>
+                                          <TableCell>{parcel.fee || 0}</TableCell>
+                                          <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
                                           <TableCell>{parcel.address}</TableCell>
-                                          <TableCell className="flex items-center justify-end gap-2">
-                                                <Link className="cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
-                                                 <Button size="sm">
+                                          <TableCell className="flex items-center gap-2">
+                                                <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
+                                                      <Button size="sm">
                                                             <EyeIcon />
                                                       </Button>
                                                 </Link>
@@ -84,11 +120,13 @@ export default function ParcelList() {
                                                       <Button size="sm">
                                                             <Trash2 />
                                                       </Button>
-                                                </DeleteConfirmation></TableCell>
+                                                </DeleteConfirmation>
                                                 <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
+                                          </TableCell>
                                     </TableRow>
                               ))}
                         </TableBody>
+                        }
                   </Table>
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
