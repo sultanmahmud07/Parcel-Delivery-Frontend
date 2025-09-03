@@ -1,7 +1,10 @@
+import ReceiverParcelList from "@/components/modules/Receiver/ReceiverParcelList"
 
 const ViewParcel = () => {
   return (
-    <div>ViewParcel</div>
+    <div>
+      <ReceiverParcelList></ReceiverParcelList>
+    </div>
   )
 }
 

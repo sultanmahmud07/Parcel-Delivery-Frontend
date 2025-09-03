@@ -1,7 +1,9 @@
 
 const Receiver = () => {
   return (
-    <div>Receiver</div>
+    <div>
+      
+    </div>
   )
 }
 

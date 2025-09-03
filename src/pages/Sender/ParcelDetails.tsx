@@ -5,13 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { formatDate } from "@/utils/getDateFormater";
 import { IStatusLog } from "@/types/parcel.type";
+import Loader from "../Spinner";
 
 const ParcelDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetParcelDetailsQuery(id);
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return <Loader></Loader>;
   }
 
   const parcel = data?.data;
@@ -20,7 +21,7 @@ const ParcelDetails = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto md:p-6">
       <Card className="shadow-xl rounded-2xl border">
         <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <CardTitle className="text-2xl font-bold">Parcel Details</CardTitle>

@@ -20,8 +20,8 @@ export const receiverSidebarItems: ISidebarItem[] = [
         component: RecentParcels,
       },
       {
-        title: "",
-        url: "/receiver/manage-parcels",
+        title: "All Parcel",
+        url: "/receiver/all-parcel",
         component: ManageParcels,
       },
       {

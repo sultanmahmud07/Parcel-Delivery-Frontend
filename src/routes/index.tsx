@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    Component: withAuth(DashboardLayout, role.sender as TRole),
+    Component: withAuth(DashboardLayout, role.receiver as TRole),
     path: "/receiver",
     children: [
       { index: true, element: <Navigate to="/receiver/overview" /> },

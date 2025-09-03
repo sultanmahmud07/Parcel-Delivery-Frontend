@@ -16,28 +16,26 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import { EyeIcon, ShieldMinus, Trash2 } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useBlockParcelByAdminMutation, useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
+import { useCancelParcelBySenderMutation, useGetParcelBySenderQuery } from "@/redux/features/parcel/parcel.api";
 import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
-import { ParcelActionMenu } from "./ParcelActionMenu";
 import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
+import Loader from "@/pages/Spinner";
 
 
-export default function ParcelList() {
+export default function SenderParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
       const [limit] = useState(10);
       const [searchTerm, setSearchTerm] = useState("")
       const [sortOrder, setSortOrder] = useState("")
-      const { data, isLoading } = useGetAllParcelsQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
-      const [removeParcel] = useRemoveParcelMutation();
-      const [blockParcelByAdmin] = useBlockParcelByAdminMutation();
+      const { data, isLoading } = useGetParcelBySenderQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
+      const [cancelParcelBySender] = useCancelParcelBySenderMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
       }
@@ -46,34 +44,16 @@ export default function ParcelList() {
             setSortOrder(value)
       }
       const handleRemoveParcel = async (parcelId: string) => {
-            const toastId = toast.loading("Removing...");
+               const toastId = toast.loading("Updating...");
             try {
-                  const res = await removeParcel(parcelId).unwrap();
-
+                  const res = await cancelParcelBySender(parcelId).unwrap();
                   if (res.success) {
-                        toast.success("Parcel remove successfully!");
                         toast.dismiss(toastId);
+                        toast.success("Parcel cancel successfully");
                   }
             } catch (err) {
+                  console.error(err);
                   toast.dismiss(toastId);
-                  console.error(err);
-            }
-      };
-
-      const handleUpdateParcel = async (parcel: IParcel) => {
-            const toastId = toast.loading("Updating...");
-            const parcelId = parcel?._id || "";
-            const parcelInfo = {
-                  isBlocked: !parcel.isBlocked
-            }
-            try {
-                  const res = await blockParcelByAdmin({ parcelId, parcelInfo }).unwrap();
-                  if (res.success) {
-                        toast.dismiss(toastId);
-                        toast.success("Parcel updated successfully");
-                  }
-            } catch (err) {
-                  console.error(err);
                   const error = err as IApiError;
                   toast.error(`${error.data.message}`);
             }
@@ -113,32 +93,26 @@ export default function ParcelList() {
                                     <TableHead>Weight</TableHead>
                                     <TableHead>Deu Amount</TableHead>
                                     <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Address</TableHead>
+                                    <TableHead className="">Tracking Id</TableHead>
+                                    <TableHead className="">Status</TableHead>
                                     <TableHead className="text-center">Action</TableHead>
                               </TableRow>
                         </TableHeader>
                         {
                               isLoading ?
-                                    <div>Loading...</div>
+                                    <Loader></Loader>
                                     :
                                     <TableBody>
-                                          {data?.data.map((parcel: IParcel) => (
+                                          {data?.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
                                                       <TableCell className="font-medium">{parcel.type}</TableCell>
                                                       <TableCell className="font-medium">{parcel.weight}</TableCell>
                                                       <TableCell>{parcel.fee || 0}</TableCell>
                                                       <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
-                                                      <TableCell>{parcel.address}</TableCell>
+                                                      <TableCell>{parcel.trackingId}</TableCell>
+                                                      <TableCell>{parcel.status}</TableCell>
                                                       <TableCell className="flex items-center gap-2">
-                                                            <div className="flex items-center space-x-2">
-                                                                  {/* <Switch id="airplane-mode" />
-       */}
-                                                                  <Button onClick={() => handleUpdateParcel(parcel)} size="sm">
-                                                                        <ShieldMinus size={72} strokeWidth={2.25} />
-                                                                  </Button>
-                                                                  <Label htmlFor="airplane-mode">{parcel.isBlocked ? "Blocked" : "Unblock"}</Label>
-                                                            </div>
-                                                            <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
+                                                            <Link className="w-full cursor-pointer" to={`/sender/parcel/${parcel._id}`}>
                                                                   <Button size="sm">
                                                                         <EyeIcon />
                                                                   </Button>
@@ -146,11 +120,10 @@ export default function ParcelList() {
                                                             <DeleteConfirmation
                                                                   onConfirm={() => handleRemoveParcel(parcel._id)}
                                                             >
-                                                                  <Button size="sm">
-                                                                        <Trash2 />
+                                                                  <Button disabled={parcel.status == "CANCELED"} variant="destructive" size="sm">
+                                                                        Cancel
                                                                   </Button>
                                                             </DeleteConfirmation>
-                                                            <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
                                                       </TableCell>
                                                 </TableRow>
                                           ))}

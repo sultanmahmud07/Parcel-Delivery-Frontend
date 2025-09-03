@@ -33,9 +33,32 @@ export const parcelApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ["PARCEL"],
             }),
+            cancelParcelBySender: builder.mutation({
+                  query: (parcelId) => ({
+                        url: `/parcel/cancel/${parcelId}`,
+                        method: "PATCH",
+                  }),
+                  invalidatesTags: ["PARCEL"],
+            }),
+            deliveryParcelByReceiver: builder.mutation({
+                  query: (parcelId) => ({
+                        url: `/parcel/delivery/${parcelId}`,
+                        method: "PATCH",
+                  }),
+                  invalidatesTags: ["PARCEL"],
+            }),
             getParcelBySender: builder.query({
                   query: (params) => ({
                         url: "/parcel/sender",
+                        method: "GET",
+                        params,
+                  }),
+                  providesTags: ["PARCEL"],
+                  transformResponse: (response) => response.data,
+            }),
+            getParcelByReceiver: builder.query({
+                  query: (params) => ({
+                        url: "/parcel/receiver",
                         method: "GET",
                         params,
                   }),
@@ -65,8 +88,11 @@ export const {
       useAddParcelMutation,
       useUpdateParcelByAdminMutation,
       useBlockParcelByAdminMutation,
+      useCancelParcelBySenderMutation,
+      useDeliveryParcelByReceiverMutation,
       useRemoveParcelMutation,
       useGetParcelBySenderQuery,
+      useGetParcelByReceiverQuery,
       useGetParcelDetailsQuery,
       useGetAllParcelsQuery,
 } = parcelApi;
