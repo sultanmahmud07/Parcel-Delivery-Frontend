@@ -1,6 +1,3 @@
-import AddDivision from "@/pages/Admin/AddDivision";
-import AddTour from "@/pages/Admin/AddTour";
-import AddTourType from "@/pages/Admin/AddTourType";
 import Parcels from "@/pages/Admin/Parcels";
 // import Analytics from "@/pages/Admin/Analytics";
 import { ISidebarItem } from "@/types";
@@ -35,28 +32,13 @@ export const adminSidebarItems: ISidebarItem[] = [
       {
         title: "Add Parcel",
         url: "/admin/parcel/create",
-        component: AddDivision,
+        component: Parcels,
       }
     ],
   },
   {
     title: "User Management",
     items: [
-      {
-        title: "All Users",
-        url: "/admin/user",
-        component: AddTourType,
-      },
-      {
-        title: "Blocked Users",
-        url: "/admin/blocked-users",
-        component: AddDivision,
-      },
-      {
-        title: "All Admins",
-        url: "/admin/admins",
-        component: AddTour,
-      },
     ],
   },
 ];
