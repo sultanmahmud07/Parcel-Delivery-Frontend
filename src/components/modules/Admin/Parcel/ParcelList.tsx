@@ -16,16 +16,18 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import { EyeIcon, Trash2 } from "lucide-react";
+import { EyeIcon, ShieldMinus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
+import { useBlockParcelByAdminMutation, useGetAllParcelsQuery, useRemoveParcelMutation, useUpdateParcelByAdminMutation } from "@/redux/features/parcel/parcel.api";
 import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
 import { ParcelActionMenu } from "./ParcelActionMenu";
 import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { IApiError } from "@/types";
 
 
 export default function ParcelList() {
@@ -35,6 +37,7 @@ export default function ParcelList() {
       const [sortOrder, setSortOrder] = useState("")
       const { data, isLoading } = useGetAllParcelsQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
       const [removeParcel] = useRemoveParcelMutation();
+      const [blockParcelByAdmin] = useBlockParcelByAdminMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
       }
@@ -57,6 +60,24 @@ export default function ParcelList() {
             }
       };
 
+      const handleUpdateParcel = async (parcel: IParcel) => {
+            const toastId = toast.loading("Updating...");
+            const parcelId = parcel?._id || "";
+            const parcelInfo = {
+                  isBlocked: !parcel.isBlocked
+            }
+            try {
+                  const res = await blockParcelByAdmin({ parcelId, parcelInfo }).unwrap();
+                  if (res.success) {
+                        toast.dismiss(toastId);
+                        toast.success("Parcel updated successfully");
+                  }
+            } catch (err) {
+                  console.error(err);
+                  const error = err as IApiError;
+                  toast.error(`${error.data.message}`);
+            }
+      };
       const totalPage = data?.meta?.totalPage || 1;
       // console.log(data)
 
@@ -93,39 +114,47 @@ export default function ParcelList() {
                                     <TableHead>Deu Amount</TableHead>
                                     <TableHead>Delivery Date</TableHead>
                                     <TableHead className="">Address</TableHead>
-                                    <TableHead className="">Status</TableHead>
+                                    <TableHead className="text-center">Action</TableHead>
                               </TableRow>
                         </TableHeader>
                         {
                               isLoading ?
-                               <div>Loading...</div>
-                               :
-                        <TableBody>
-                              {data?.data.map((parcel: IParcel) => (
-                                    <TableRow key={parcel._id}>
-                                          <TableCell className="font-medium">{parcel.type}</TableCell>
-                                          <TableCell className="font-medium">{parcel.weight}</TableCell>
-                                          <TableCell>{parcel.fee || 0}</TableCell>
-                                          <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
-                                          <TableCell>{parcel.address}</TableCell>
-                                          <TableCell className="flex items-center gap-2">
-                                                <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
-                                                      <Button size="sm">
-                                                            <EyeIcon />
-                                                      </Button>
-                                                </Link>
-                                                <DeleteConfirmation
-                                                      onConfirm={() => handleRemoveParcel(parcel._id)}
-                                                >
-                                                      <Button size="sm">
-                                                            <Trash2 />
-                                                      </Button>
-                                                </DeleteConfirmation>
-                                                <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
-                                          </TableCell>
-                                    </TableRow>
-                              ))}
-                        </TableBody>
+                                    <div>Loading...</div>
+                                    :
+                                    <TableBody>
+                                          {data?.data.map((parcel: IParcel) => (
+                                                <TableRow key={parcel._id}>
+                                                      <TableCell className="font-medium">{parcel.type}</TableCell>
+                                                      <TableCell className="font-medium">{parcel.weight}</TableCell>
+                                                      <TableCell>{parcel.fee || 0}</TableCell>
+                                                      <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
+                                                      <TableCell>{parcel.address}</TableCell>
+                                                      <TableCell className="flex items-center gap-2">
+                                                            <div className="flex items-center space-x-2">
+                                                                  {/* <Switch id="airplane-mode" />
+       */}
+                                                                  <Button onClick={()=> handleUpdateParcel(parcel)} size="sm">
+                                                                        <ShieldMinus size={72} strokeWidth={2.25} />
+                                                                  </Button>
+                                                                  <Label htmlFor="airplane-mode">{parcel.isBlocked ? "Blocked" : "Unblock"}</Label>
+                                                            </div>
+                                                            <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
+                                                                  <Button size="sm">
+                                                                        <EyeIcon />
+                                                                  </Button>
+                                                            </Link>
+                                                            <DeleteConfirmation
+                                                                  onConfirm={() => handleRemoveParcel(parcel._id)}
+                                                            >
+                                                                  <Button size="sm">
+                                                                        <Trash2 />
+                                                                  </Button>
+                                                            </DeleteConfirmation>
+                                                            <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
+                                                      </TableCell>
+                                                </TableRow>
+                                          ))}
+                                    </TableBody>
                         }
                   </Table>
                   {totalPage > 1 && (

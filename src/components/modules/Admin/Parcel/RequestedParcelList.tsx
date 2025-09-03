@@ -1,4 +1,4 @@
-
+import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { Button } from "@/components/ui/button";
 import {
       Table,
@@ -16,27 +16,28 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import { EyeIcon, History } from "lucide-react";
+import { EyeIcon, ShieldMinus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useBlockParcelByAdminMutation, useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
+import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
+import { ParcelActionMenu } from "./ParcelActionMenu";
 import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { UserActionMenu } from "./UserActionMenu";
-import { useGetDeletedUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
-import { IApiError, IUser } from "@/types";
-import { UndoDeleteConfirmation } from "@/components/UndoDeleteConfirmation";
-import Loader from "@/pages/Spinner";
+import { Label } from "@/components/ui/label";
+import { IApiError } from "@/types";
 
 
-export default function DeletedUserList() {
+export default function RequestedParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
       const [limit] = useState(10);
       const [searchTerm, setSearchTerm] = useState("")
       const [sortOrder, setSortOrder] = useState("")
-      const { data, isLoading } = useGetDeletedUserQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
-      const [updateUserByAdmin] = useUpdateUserMutation();
+      const { data, isLoading } = useGetAllParcelsQuery({ page: currentPage, limit, searchTerm, sort: sortOrder, status: "REQUESTED" });
+      const [removeParcel] = useRemoveParcelMutation();
+      const [blockParcelByAdmin] = useBlockParcelByAdminMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
       }
@@ -44,16 +45,32 @@ export default function DeletedUserList() {
       const handleSortChange = (value: string) => {
             setSortOrder(value)
       }
-      const handleRemoveUser = async (userId: string) => {
+      const handleRemoveParcel = async (parcelId: string) => {
             const toastId = toast.loading("Removing...");
-            const userInfo = {
-                  isDeleted: false
+            try {
+                  const res = await removeParcel(parcelId).unwrap();
+
+                  if (res.success) {
+                        toast.success("Parcel remove successfully!");
+                        toast.dismiss(toastId);
+                  }
+            } catch (err) {
+                  toast.dismiss(toastId);
+                  console.error(err);
+            }
+      };
+
+      const handleUpdateParcel = async (parcel: IParcel) => {
+            const toastId = toast.loading("Updating...");
+            const parcelId = parcel?._id || "";
+            const parcelInfo = {
+                  isBlocked: !parcel.isBlocked
             }
             try {
-                  const res = await updateUserByAdmin({ userId, userInfo }).unwrap();
+                  const res = await blockParcelByAdmin({ parcelId, parcelInfo }).unwrap();
                   if (res.success) {
                         toast.dismiss(toastId);
-                        toast.success("User delete successfully");
+                        toast.success("Parcel updated successfully");
                   }
             } catch (err) {
                   console.error(err);
@@ -61,7 +78,6 @@ export default function DeletedUserList() {
                   toast.error(`${error.data.message}`);
             }
       };
-
       const totalPage = data?.meta?.totalPage || 1;
       // console.log(data)
 
@@ -69,7 +85,7 @@ export default function DeletedUserList() {
       return (
             <div className="w-full ">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-                        <h1 className="text-2xl font-bold">Deleted User</h1>
+                        <h1 className="text-2xl font-bold">Requested Parcels</h1>
                         <Input
                               className="w-full md:w-sm"
                               type="text"
@@ -93,40 +109,48 @@ export default function DeletedUserList() {
                   <Table>
                         <TableHeader>
                               <TableRow>
-                                    <TableHead className="">Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Date</TableHead>
+                                    <TableHead className="">Type</TableHead>
+                                    <TableHead>Weight</TableHead>
+                                    <TableHead>Deu Amount</TableHead>
+                                    <TableHead>Delivery Date</TableHead>
                                     <TableHead className="">Status</TableHead>
                                     <TableHead className="text-center">Action</TableHead>
                               </TableRow>
                         </TableHeader>
                         {
                               isLoading ?
-                                    <Loader></Loader>
+                                    <div>Loading...</div>
                                     :
                                     <TableBody>
-                                          {data?.data.map((user: IUser) => (
-                                                <TableRow key={user._id}>
-                                                      <TableCell className="font-bold uppercase">{user.name}</TableCell>
-                                                      <TableCell className="font-medium">{user.email}</TableCell>
-                                                      <TableCell>{user.role}</TableCell>
-                                                      <TableCell className="">{formatDate(user.createdAt)}</TableCell>
-                                                      <TableCell>{user.isActive}</TableCell>
-                                                      <TableCell className="flex items-center justify-end gap-2">
-                                                            <Link className="cursor-pointer" to={`/admin/user/${user._id}`}>
+                                          {data?.data.map((parcel: IParcel) => (
+                                                <TableRow key={parcel._id}>
+                                                      <TableCell className="font-medium">{parcel.type}</TableCell>
+                                                      <TableCell className="font-medium">{parcel.weight}</TableCell>
+                                                      <TableCell>{parcel.fee || 0}</TableCell>
+                                                      <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
+                                                      <TableCell className="text-yellow-600">{parcel.status}</TableCell>
+                                                      <TableCell className="flex items-center gap-2">
+                                                            <div className="flex items-center space-x-2">
+                                                                  {/* <Switch id="airplane-mode" />
+       */}
+                                                                  <Button onClick={()=> handleUpdateParcel(parcel)} size="sm">
+                                                                        <ShieldMinus size={72} strokeWidth={2.25} />
+                                                                  </Button>
+                                                                  <Label htmlFor="airplane-mode">{parcel.isBlocked ? "Blocked" : "Unblock"}</Label>
+                                                            </div>
+                                                            <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
                                                                   <Button size="sm">
                                                                         <EyeIcon />
                                                                   </Button>
                                                             </Link>
-                                                            <UndoDeleteConfirmation
-                                                                  onConfirm={() => handleRemoveUser(user._id)}
+                                                            <DeleteConfirmation
+                                                                  onConfirm={() => handleRemoveParcel(parcel._id)}
                                                             >
-                                                                  <Button  size="sm">
-                                                                        <History size={72} strokeWidth={3.25} />
+                                                                  <Button size="sm">
+                                                                        <Trash2 />
                                                                   </Button>
-                                                            </UndoDeleteConfirmation>
-                                                            <UserActionMenu user={user}></UserActionMenu>
+                                                            </DeleteConfirmation>
+                                                            <ParcelActionMenu parcel={parcel}></ParcelActionMenu>
                                                       </TableCell>
                                                 </TableRow>
                                           ))}

@@ -36,7 +36,7 @@ export function ParcelActionMenu({ parcel }: { parcel: IParcel }) {
                   status: status
             }
             try {
-                  const res = await updateParcelByAdmin({parcelId, parcelInfo}).unwrap();
+                  const res = await updateParcelByAdmin({ parcelId, parcelInfo }).unwrap();
                   if (res.success) {
                         toast.dismiss(toastId);
                         toast.success("Parcel status updated successfully");
@@ -48,7 +48,7 @@ export function ParcelActionMenu({ parcel }: { parcel: IParcel }) {
                   toast.error(`${error.data.message}`);
             }
       };
-      
+
       return (
             <DropdownMenu>
                   <DropdownMenuTrigger asChild>

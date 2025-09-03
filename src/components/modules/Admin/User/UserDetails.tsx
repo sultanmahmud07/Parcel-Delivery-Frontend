@@ -3,13 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { useGetUserDetailsQuery } from "@/redux/features/user/user.api";
+import Loader from "@/pages/Spinner";
 
 const UserDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetUserDetailsQuery(id);
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return <Loader></Loader>;
   }
 
   const user = data;

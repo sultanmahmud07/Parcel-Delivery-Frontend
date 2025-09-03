@@ -26,6 +26,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { UserActionMenu } from "./UserActionMenu";
 import { useGetUnauthorUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import { IApiError, IUser } from "@/types";
+import Loader from "@/pages/Spinner";
 
 
 export default function AllUnauthorUserList() {
@@ -101,7 +102,7 @@ export default function AllUnauthorUserList() {
                         </TableHeader>
                         {
                               isLoading ?
-                                    <div>Loading...</div>
+                                    <Loader></Loader>
                                     :
                                     <TableBody>
                                           {data?.data.map((user: IUser) => (

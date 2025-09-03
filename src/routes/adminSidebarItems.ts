@@ -1,3 +1,4 @@
+import RequestedParcelList from "@/components/modules/Admin/Parcel/RequestedParcelList";
 import DeletedUserList from "@/components/modules/Admin/User/DeletedUser";
 import AllUnauthorUserList from "@/components/modules/Admin/User/UnauthorUser";
 import AllUserList from "@/components/modules/Admin/User/UserList";
@@ -23,14 +24,14 @@ export const adminSidebarItems: ISidebarItem[] = [
     title: "Parcel Management",
     items: [
       {
-        title: "Pending Parcels",
-        url: "/admin/parcel/pending",
-        component: Parcels,
-      },
-      {
         title: "All Parcels",
         url: "/admin/parcels",
         component: Parcels,
+      },
+      {
+        title: "Requested ",
+        url: "/admin/parcel/requested",
+        component: RequestedParcelList,
       },
       {
         title: "Add Parcel",
