@@ -8,14 +8,6 @@ import {
       TableHeader,
       TableRow,
 } from "@/components/ui/table";
-import {
-      Pagination,
-      PaginationContent,
-      PaginationItem,
-      PaginationLink,
-      PaginationNext,
-      PaginationPrevious,
-} from "@/components/ui/pagination";
 import { EyeIcon, ShieldMinus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
