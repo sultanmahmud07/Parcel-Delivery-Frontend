@@ -9,9 +9,18 @@ export const receiverApi = baseApi.injectEndpoints({
                         params,
                   })
             }),
+            getReceiverAnalytics: builder.query({
+                  query: (params) => ({
+                        url: "/stats/receiver",
+                        method: "GET",
+                        params,
+                  }),
+                  transformResponse: (response) => response.data,
+            }),
       }),
 });
 
 export const {
       useGetReceiverQuery,
+      useGetReceiverAnalyticsQuery,
 } = receiverApi;

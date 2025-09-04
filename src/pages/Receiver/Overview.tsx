@@ -1,7 +1,10 @@
+import ReceiverAnalytics from "@/components/modules/Receiver/ReceiverAnalyticsDaily"
 
 const Overview = () => {
   return (
-    <div>Overview</div>
+    <div>
+      <ReceiverAnalytics></ReceiverAnalytics>
+    </div>
   )
 }
 

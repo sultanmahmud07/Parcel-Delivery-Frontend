@@ -1,7 +1,10 @@
+import SenderAnalytics from "@/components/modules/Sender/SenderAnalytics"
 
 const Overview = () => {
   return (
-    <div>Overview</div>
+    <div>
+      <SenderAnalytics></SenderAnalytics>
+    </div>
   )
 }
 
