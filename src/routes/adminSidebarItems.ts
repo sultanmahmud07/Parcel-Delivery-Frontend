@@ -1,3 +1,4 @@
+import UserAnalytics from "@/components/modules/Admin/Analytics/UserAnalytics";
 import RequestedParcelList from "@/components/modules/Admin/Parcel/RequestedParcelList";
 import DeletedUserList from "@/components/modules/Admin/User/DeletedUser";
 import AllUnauthorUserList from "@/components/modules/Admin/User/UnauthorUser";
@@ -10,19 +11,24 @@ import { lazy } from "react";
 const Analytics = lazy(() => import("@/pages/Admin/Analytics"));
 
 export const adminSidebarItems: ISidebarItem[] = [
+  // {
+  //   title: "Dashboard",
+  //   items: [
+  //     {
+  //       title: "Analytics",
+  //       url: "/admin/analytics",
+  //       component: Analytics,
+  //     },
+  //   ],
+  // },
   {
-    title: "Dashboard",
+    title: "Parcel Management",
     items: [
-      {
+       {
         title: "Analytics",
         url: "/admin/analytics",
         component: Analytics,
       },
-    ],
-  },
-  {
-    title: "Parcel Management",
-    items: [
       {
         title: "All Parcels",
         url: "/admin/parcels",
@@ -43,6 +49,11 @@ export const adminSidebarItems: ISidebarItem[] = [
   {
     title: "User Management",
     items: [
+      {
+        title: "Analytics",
+        url: "/admin/user/analytics",
+        component: UserAnalytics,
+      },
       {
         title: "All User",
         url: "/admin/user/all",
