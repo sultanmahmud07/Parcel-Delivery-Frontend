@@ -56,7 +56,7 @@ const users = data?.data;
   }, []);
 
   return (
-    <div className="px-3 md:px-4 space-y-5">
+    <div className="md:px-4 space-y-5">
       <h1 className="text-2xl md:text-3xl font-bold">👥 User Analytics Dashboard</h1>
 
       {/* Overview Cards */}

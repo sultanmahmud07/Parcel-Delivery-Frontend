@@ -33,6 +33,15 @@ export const userApi = baseApi.injectEndpoints({
                   providesTags: ["USER"],
                   transformResponse: (response) => response,
             }),
+            getAllAdmin: builder.query({
+                  query: (params) => ({
+                        url: "/user/all-admin",
+                        method: "GET",
+                        params: params,
+                  }),
+                  providesTags: ["USER"],
+                  transformResponse: (response) => response,
+            }),
             getDeletedUser: builder.query({
                   query: (params) => ({
                         url: "/user/deleted-users",
@@ -59,6 +68,7 @@ export const {
       useRemoveUserMutation,
       useGetUserDetailsQuery,
       useGetAllUserQuery,
+      useGetAllAdminQuery,
       useGetDeletedUserQuery,
       useGetUnauthorUserQuery,
 } = userApi;

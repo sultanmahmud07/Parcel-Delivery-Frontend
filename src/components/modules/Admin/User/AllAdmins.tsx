@@ -1,4 +1,4 @@
-
+import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { Button } from "@/components/ui/button";
 import {
       Table,
@@ -8,7 +8,15 @@ import {
       TableHeader,
       TableRow,
 } from "@/components/ui/table";
-import { EyeIcon, History } from "lucide-react";
+import {
+      Pagination,
+      PaginationContent,
+      PaginationItem,
+      PaginationLink,
+      PaginationNext,
+      PaginationPrevious,
+} from "@/components/ui/pagination";
+import { EyeIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -16,18 +24,17 @@ import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UserActionMenu } from "./UserActionMenu";
-import { useGetDeletedUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
+import { useGetAllAdminQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import { IApiError, IUser } from "@/types";
-import { UndoDeleteConfirmation } from "@/components/UndoDeleteConfirmation";
 import Loader from "@/pages/Spinner";
 
 
-export default function DeletedUserList() {
-      const [currentPage] = useState(1);
+export default function AllAdminList() {
+      const [currentPage, setCurrentPage] = useState(1);
       const [limit] = useState(10);
       const [searchTerm, setSearchTerm] = useState("")
       const [sortOrder, setSortOrder] = useState("")
-      const { data, isLoading } = useGetDeletedUserQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
+      const { data, isLoading } = useGetAllAdminQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
       const [updateUserByAdmin] = useUpdateUserMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
@@ -39,7 +46,7 @@ export default function DeletedUserList() {
       const handleRemoveUser = async (userId: string) => {
             const toastId = toast.loading("Removing...");
             const userInfo = {
-                  isDeleted: false
+                  isDeleted: true
             }
             try {
                   const res = await updateUserByAdmin({ userId, userInfo }).unwrap();
@@ -54,12 +61,14 @@ export default function DeletedUserList() {
             }
       };
 
+      const totalPage =  1;
+      // console.log(data)
 
 
       return (
             <div className="w-full ">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-                        <h1 className="text-2xl font-bold">Deleted User</h1>
+                        <h1 className="text-2xl font-bold">Manage Admin</h1>
                         <Input
                               className="w-full md:w-sm"
                               type="text"
@@ -109,13 +118,13 @@ export default function DeletedUserList() {
                                                                         <EyeIcon />
                                                                   </Button>
                                                             </Link>
-                                                            <UndoDeleteConfirmation
+                                                            <DeleteConfirmation
                                                                   onConfirm={() => handleRemoveUser(user._id)}
                                                             >
-                                                                  <Button  size="sm">
-                                                                        <History size={72} strokeWidth={3.25} />
+                                                                  <Button size="sm">
+                                                                        <Trash2 />
                                                                   </Button>
-                                                            </UndoDeleteConfirmation>
+                                                            </DeleteConfirmation>
                                                             <UserActionMenu user={user}></UserActionMenu>
                                                       </TableCell>
                                                 </TableRow>
@@ -123,7 +132,7 @@ export default function DeletedUserList() {
                                     </TableBody>
                         }
                   </Table>
-                  {/* {totalPage > 1 && (
+                  {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>
                                     <Pagination>
@@ -164,7 +173,7 @@ export default function DeletedUserList() {
                                     </Pagination>
                               </div>
                         </div>
-                  )} */}
+                  )}
             </div>
       );
 }

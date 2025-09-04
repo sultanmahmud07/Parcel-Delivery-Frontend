@@ -17,6 +17,7 @@ import {
 // ✅ lucide-react icons
 import { Package, CheckCircle2, Truck, Clock } from "lucide-react";
 import Loader from "@/pages/Spinner";
+import RecentParcelForOverview from "./RecentParcelForOverview";
 
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"];
 
@@ -57,7 +58,7 @@ const AdminAnalytics = () => {
   }, []);
 
   return (
-    <div className="md:px-4 px-3 space-y-5">
+    <div className="md:px-4 space-y-5">
       <h1 className="text-2xl md:text-3xl font-bold">📊 Admin Analytics Dashboard</h1>
 
       {/* Overview Cards */}
@@ -154,6 +155,7 @@ const AdminAnalytics = () => {
           </CardContent>
         </Card>
       </div>
+      <RecentParcelForOverview></RecentParcelForOverview>
     </div>
   );
 };

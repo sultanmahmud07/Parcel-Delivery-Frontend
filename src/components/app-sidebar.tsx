@@ -36,25 +36,30 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {/* <span className="text-primary text-xs uppercase font-bold">Books Finder</span> */}
             </Link>
       </SidebarHeader>
-      <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink className={"uppercase"} to={item.url}>{item.title}</NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
-      </SidebarContent>
+     <SidebarContent>
+  {/* We create a SidebarGroup for each parent. */}
+  {data.navMain.map((item) => (
+    <SidebarGroup key={item.title}>
+      <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {item.items.map((subItem) => (
+            <SidebarMenuItem key={subItem.title}>
+              <SidebarMenuButton asChild>
+                <NavLink className="flex items-center gap-2 uppercase" to={subItem.url}>
+                  {/* Show icon if exists */}
+                  {subItem.icon && <subItem.icon />}
+                  {subItem.title}
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  ))}
+</SidebarContent>
+
       <SidebarRail />
     </Sidebar>
   );
