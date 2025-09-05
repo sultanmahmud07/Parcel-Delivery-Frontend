@@ -63,7 +63,7 @@ export default function SenderParcelList() {
 
 
       return (
-            <div className="w-full ">
+            <div className="create-parcel w-full ">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
                         <h1 className="text-2xl font-bold">All Parcels</h1>
                         <Input
