@@ -1,7 +1,8 @@
+import ReceiverParcelList from "@/components/modules/Receiver/ReceiverParcelList"
 
 const ManageParcels = () => {
   return (
-    <div>ManageParcels</div>
+    <div><ReceiverParcelList></ReceiverParcelList></div>
   )
 }
 

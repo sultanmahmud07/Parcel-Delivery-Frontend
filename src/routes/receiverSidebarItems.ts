@@ -23,16 +23,16 @@ export const receiverSidebarItems: ISidebarItem[] = [
         icon: Clock,
       },
       {
-        title: "All Parcel",
-        url: "/receiver/all-parcel",
-        component: ManageParcels,
-        icon: PackageSearch,
-      },
-      {
         title: "Received Parcel",
         url: "/receiver/parcel/received",
         component: ReceivedParcel,
         icon: Inbox,
+      },
+      {
+        title: "All Parcel",
+        url: "/receiver/all-parcel",
+        component: ManageParcels,
+        icon: PackageSearch,
       },
     ],
   },

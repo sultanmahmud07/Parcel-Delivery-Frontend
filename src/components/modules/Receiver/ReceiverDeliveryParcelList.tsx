@@ -19,7 +19,7 @@ import {
 import { EyeIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useCancelParcelBySenderMutation, useGetParcelBySenderQuery } from "@/redux/features/parcel/parcel.api";
+import { useDeliveryParcelByReceiverMutation, useGetParcelByReceiverQuery } from "@/redux/features/parcel/parcel.api";
 import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
 import { formatDate } from "@/utils/getDateFormater";
@@ -29,13 +29,13 @@ import { IApiError } from "@/types";
 import Loader from "@/pages/Spinner";
 
 
-export default function SenderParcelList() {
+export default function ReceiverDelivaryParcelList() {
       const [currentPage, setCurrentPage] = useState(1);
       const [limit] = useState(10);
       const [searchTerm, setSearchTerm] = useState("")
       const [sortOrder, setSortOrder] = useState("")
-      const { data, isLoading } = useGetParcelBySenderQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
-      const [cancelParcelBySender] = useCancelParcelBySenderMutation();
+      const { data, isLoading } = useGetParcelByReceiverQuery({ page: currentPage, limit, searchTerm, sort: sortOrder, status: "DELIVERED" });
+      const [deliveryParcelByReceiver] = useDeliveryParcelByReceiverMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
       }
@@ -46,10 +46,10 @@ export default function SenderParcelList() {
       const handleRemoveParcel = async (parcelId: string) => {
                const toastId = toast.loading("Updating...");
             try {
-                  const res = await cancelParcelBySender(parcelId).unwrap();
+                  const res = await deliveryParcelByReceiver(parcelId).unwrap();
                   if (res.success) {
                         toast.dismiss(toastId);
-                        toast.success("Parcel cancel successfully");
+                        toast.success("Parcel Devlivery successfully");
                   }
             } catch (err) {
                   console.error(err);
@@ -65,7 +65,7 @@ export default function SenderParcelList() {
       return (
             <div className="w-full ">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-                        <h1 className="text-2xl font-bold">All Parcels</h1>
+                        <h1 className="text-2xl font-bold">Received Parcels</h1>
                         <Input
                               className="w-full md:w-sm"
                               type="text"
@@ -112,7 +112,7 @@ export default function SenderParcelList() {
                                                       <TableCell>{parcel.trackingId}</TableCell>
                                                       <TableCell className={`${parcel.status == "DELIVERED" && "text-green-600 font-bold"} ${parcel.status == "CANCELED" && "text-red-600 font-bold"} ${parcel.status == "REQUESTED" && "text-yellow-600 font-bold"} `}>{parcel.status}</TableCell>
                                                       <TableCell className="flex items-center gap-2">
-                                                            <Link className="w-full cursor-pointer" to={`/sender/parcel/${parcel._id}`}>
+                                                            <Link className="w-full cursor-pointer" to={`/receiver/parcel/${parcel._id}`}>
                                                                   <Button size="sm">
                                                                         <EyeIcon />
                                                                   </Button>
@@ -120,8 +120,8 @@ export default function SenderParcelList() {
                                                             <DeleteConfirmation
                                                                   onConfirm={() => handleRemoveParcel(parcel._id)}
                                                             >
-                                                                  <Button disabled={parcel.status == "CANCELED"} variant="destructive" size="sm">
-                                                                        Cancel
+                                                                  <Button disabled={parcel.status == "DELIVERED"} size="sm">
+                                                                        DELIVERED
                                                                   </Button>
                                                             </DeleteConfirmation>
                                                       </TableCell>

@@ -11,12 +11,7 @@ import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/Unauthorized";
 import { role } from "@/constants/role";
 import { TRole } from "@/types";
-import Tours from "@/pages/Tours";
-import TourDetails from "@/pages/TourDetails";
-import Booking from "@/pages/Booking";
 import Homepage from "@/pages/Homepage";
-import Success from "@/pages/Payment/Success";
-import Fail from "@/pages/Payment/Fail";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSidebarItems";
 import ParcelDetails from "@/pages/Sender/ParcelDetails";
@@ -51,18 +46,6 @@ export const router = createBrowserRouter([
         path: "track",
       },
       {
-        Component: Tours,
-        path: "tours",
-      },
-      {
-        Component: TourDetails,
-        path: "tours/:id",
-      },
-      {
-        Component: withAuth(Booking),
-        path: "booking/:id",
-      },
-      {
         Component: Login,
         path: "/login",
       },
@@ -77,10 +60,6 @@ export const router = createBrowserRouter([
       {
         Component: Unauthorized,
         path: "/unauthorized",
-      },
-      {
-        Component: Success,
-        path: "/payment/success",
       },
     ],
   },
@@ -123,9 +102,5 @@ export const router = createBrowserRouter([
         Component: ParcelDetails,
       },
     ],
-  },
-  {
-    Component: Fail,
-    path: "/payment/fail",
   },
 ]);

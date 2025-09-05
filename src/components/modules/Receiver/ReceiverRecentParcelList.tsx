@@ -67,7 +67,7 @@ export default function ReceiverRecentParcelList() {
                                                       <TableCell>{parcel.fee || 0}</TableCell>
                                                       <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
                                                       <TableCell>{parcel.trackingId}</TableCell>
-                                                      <TableCell className={`${parcel.status == "DELIVERED" && "text-green-600 font-bold"}`}>{parcel.status}</TableCell>
+                                                      <TableCell className={`${parcel.status == "DELIVERED" && "text-green-600 font-bold"} ${parcel.status == "CANCELED" && "text-red-600 font-bold"} ${parcel.status == "REQUESTED" && "text-yellow-600 font-bold"} `}>{parcel.status}</TableCell>
                                                       <TableCell className="flex items-center gap-2">
                                                             <Link className="w-full cursor-pointer" to={`/receiver/parcel/${parcel._id}`}>
                                                                   <Button size="sm">

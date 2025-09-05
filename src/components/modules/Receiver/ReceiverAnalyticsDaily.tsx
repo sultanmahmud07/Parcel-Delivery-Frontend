@@ -4,7 +4,6 @@ import { Package, CheckCircle2, Truck, Clock } from "lucide-react";
 import { useGetReceiverAnalyticsQuery } from "@/redux/features/receiver/receiver.api";
 import ReceiverRecentParcelList from "./ReceiverRecentParcelList";
 import Loader from "@/pages/Spinner";
-
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"];
 
 const ReceiverAnalytics = () => {

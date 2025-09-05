@@ -1,7 +1,8 @@
+import ReceiverDelivaryParcelList from "@/components/modules/Receiver/ReceiverDeliveryParcelList"
 
 const ReceivedParcel = () => {
   return (
-    <div>ReceivedParcel</div>
+    <div><ReceiverDelivaryParcelList></ReceiverDelivaryParcelList></div>
   )
 }
 
