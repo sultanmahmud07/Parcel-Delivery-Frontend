@@ -47,7 +47,7 @@ dedicated roles like **Admin**, **Sender**, and **Receiver**.
 3.  Create a `.env` file in the root and configure API URL:
 
     ``` env
-    VITE_API_URL=https://parcel-delivery-api-sigma.vercel.app/api/v1
+    VITE_BASE_URL=https://parcel-delivery-api-sigma.vercel.app/api/v1
     ```
 
 4.  Run the development server:
