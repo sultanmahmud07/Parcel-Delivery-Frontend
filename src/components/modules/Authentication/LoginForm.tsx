@@ -15,6 +15,7 @@ import { IApiError } from "@/types";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
+// import Cookies from "js-cookie";
 
 export function LoginForm({
   className,
@@ -24,13 +25,24 @@ export function LoginForm({
   const form = useForm({
   });
   const [login] = useLoginMutation();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
 
       if (res.success) {
         toast.success("Logged in successfully");
-        navigate("/");
+        console.log(res.data.user.role)
+        if (res.data.user.role === "SENDER") {
+          navigate("/sender/overview");
+        }
+        else if (res.data.user.role === "RECEIVER") {
+          navigate("/receiver/overview");
+        } else if (res.data.user.role === "SUPER_ADMIN" || res.data.user.role === "ADMIN") {
+          navigate("/admin/analytics");
+        } else {
+          navigate("/");
+        }
       }
     } catch (err) {
       console.log(err);
@@ -38,6 +50,14 @@ export function LoginForm({
       toast.error(`${error.data.message}`);
     }
   };
+
+  // useEffect(() => {
+  //   const token = Cookies.get("accessToken");
+  //   console.log(token)
+  //   if (token) {
+  //     navigate("/", { replace: true });
+  //   }
+  // }, [navigate]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -99,7 +119,7 @@ export function LoginForm({
           </span>
         </div>
 
-        {/*//* http://localhost:5000/api/v1/auth/google */}
+        {/*//* http://localhost:3000/api/v1/auth/google */}
         <Button
           onClick={() => window.open(`${config.baseUrl}/auth/google`)}
           type="button"

@@ -83,3 +83,12 @@ export interface IUser {
   createdAt: string; 
   updatedAt: string;
 }
+export interface IContact {
+  _id: string;
+  name: string; 
+  email: string;
+  phone: string;
+  message: string;
+  createdAt: string;
+  updatedAt: string;
+}

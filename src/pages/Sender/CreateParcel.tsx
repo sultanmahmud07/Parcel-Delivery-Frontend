@@ -77,7 +77,7 @@ const CreateParcel = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
   }, [weight, form]);
 
   const onSubmit = async (data: ParcelFormValues) => {
-    console.log(data)
+    // console.log(data)
     try {
       const res = await addParcel({
         ...data,
@@ -115,7 +115,7 @@ const CreateParcel = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="parcel-create-from-select grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {/* Receiver */}
           <FormField

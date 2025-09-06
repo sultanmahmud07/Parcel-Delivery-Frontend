@@ -3,13 +3,14 @@ import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, Cart
 import { Package, CheckCircle2, Truck, Clock } from "lucide-react";
 import { useGetSenderAnalyticsQuery } from "@/redux/features/sender/sender.api";
 import SenderRecentParcelList from "./RecentParcelList";
+import Loader from "@/pages/Spinner";
 
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"];
 
 const SenderAnalytics = () => {
   const { data, isLoading } = useGetSenderAnalyticsQuery(undefined);
 
-  if (isLoading) return <p>Loading analytics...</p>;
+  if (isLoading) return <Loader></Loader>;
 
   const { totalParcels, delivered, inTransit, pending, canceled, monthlyShipments } =
     data?.data || {};

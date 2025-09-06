@@ -1,5 +1,10 @@
 
+import { useAddContactMutation } from '@/redux/features/contact/contact.api';
+import { IApiError } from '@/types';
 import { useState } from 'react';
+import { FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import { IoLogoInstagram } from 'react-icons/io5';
+import { toast } from 'sonner';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -10,44 +15,40 @@ const ContactForm = () => {
     message: '',
   });
   const [isLoading, setIsLoading] = useState(false); // ⬅️ loader state
-
-  const handleChange = (e:any) => {
+  const [addContact] = useAddContactMutation();
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setIsLoading(true); // ⬅️ show loader
-    // try {
-    //   const response = await axios.post(`${""}/contact-request`, formData);
-    //   console.log('Server Response:', response.data);
+    setIsLoading(true);
+    const contactInfo = {
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+    }
+    try {
+      const res = await addContact(contactInfo).unwrap();
+      if (res.success) {
+        toast.success("Message send successfully");
+        setIsLoading(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
 
-    //   Swal.fire({
-    //     title: 'Message sent successfully!',
-    //     text: "Thank you for contacting us!",
-    //     icon: "success"
-    //   });
-
-    //   // ⬅️ Reset form after success
-    //   setFormData({
-    //     firstName: '',
-    //     lastName: '',
-    //     email: '',
-    //     phone: '',
-    //     message: '',
-    //   });
-    //   setIsLoading(false); // ⬅️ hide loader
-    // } catch (error) {
-    //   console.error('Error sending message:', error.response?.data || error.message);
-    //   Swal.fire({
-    //     title: "Oops!",
-    //     text: "Failed to send message. Please try again later.",
-    //     icon: "error"
-    //   });
-    //   setIsLoading(false); // ⬅️ hide loader
-    // } finally {
-    //   setIsLoading(false); // ⬅️ hide loader
-    // }
+      }
+    } catch (err) {
+      console.error(err);
+      const error = err as IApiError;
+      setIsLoading(false);
+      toast.error(error?.data?.message || "Failed to create Contact");
+    }
   };
 
   return (
@@ -162,25 +163,39 @@ const ContactForm = () => {
             <div className=" bg-secondary mt-6 p-6 rounded shadow-sm">
               <h4 className="text-xl md:text-2xl font-bold mb-3">Address</h4>
               <p className=" mb-4">
-                Quam Elementum Pulvinar Etiam Non Quam Lacus Suspendisse.
-                A Scelerisque Purus Semper Eget Duis At Lobortisscelerisque
-                Fermentum Dui Faucibus In Ornare....
+                Experience fast, secure, and affordable parcel services. From documents to heavy shipments, we ensure your deliveries reach the right place at the right time.
               </p>
 
               <p className="font-semibold ">
-                Location(Corporate Office): <br />
-                <span className="font-normal">
-                  House- 4, Level- 2, Road-15 Block- D, Banani, Dhaka Bangladesh.
+                Location: <span className="font-normal">
+                   Banani, Dhaka, Bangladesh.
                 </span>
               </p>
 
               <p className="mt-2 font-semibold">
-                Phone: <span className="font-normal">+8801814-115544</span>
+                Phone: <span className="font-normal">+8801327-357894</span>
               </p>
 
               <p className="mt-2 font-semibold">
-                Email: <span className="font-normal">Hello@Cjus.Ngo</span>
+                Email: <span className="font-normal">info@gmail.com</span>
               </p>
+             <div className="flex items-center gap-3 py-5">
+                        <a href="https://www.facebook.com/joltorongo.awt" className="flex items-center justify-center transition text-primary text-xl">
+                          <FaFacebookF />
+                        </a>
+                        <a href="https://www.instagram.com/jol.torongo.coxbazar" className="flex items-center justify-center transition text-primary text-xl">
+                          <IoLogoInstagram />
+                        </a>
+                        <a href="https://www.linkedin.com/company/joltorongo" className="flex items-center justify-center transition text-primary text-xl">
+                          <FaLinkedinIn />
+                        </a>
+                        <a
+                          href="https://www.youtube.com/@JoltorongoAWT"
+                          className="flex items-center justify-center transition text-primary text-xl"
+                        >
+                          <FaYoutube />
+                        </a>
+                      </div>
             </div>
           </div>
         </div>

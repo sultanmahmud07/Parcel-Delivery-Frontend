@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo/logo.png";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
 import { ModeToggle } from "./ModeToggler";
@@ -17,7 +17,7 @@ const Navbar = () => {
   const { data } = useUserInfoQuery(undefined);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -39,6 +39,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await logout(undefined);
     dispatch(authApi.util.resetApiState());
+    navigate("/login")
   };
 
   const navigationLinks = [
@@ -65,7 +66,7 @@ const Navbar = () => {
               </p>
               <p className="flex items-center gap-2 text-white">
                 <span className="text-xl"><MdOutlineEmail /></span>
-                <span>hello@cjus.ngo</span>
+                <span>info@gmail.com</span>
               </p>
             </div>
             <div className="social_media_link">
@@ -101,7 +102,7 @@ const Navbar = () => {
                 height={100}
                 className="w-20"
               />
-              {/* <span className="text-primary text-xs uppercase font-bold">Books Finder</span> */}
+              {/* <span className="text- text-xs uppercase font-bold">Express BD</span> */}
             </Link>
           </div>
           {/* NAv manu side here >>>>>>>>>>>>>>>> */}
