@@ -34,8 +34,8 @@ dedicated roles like **Admin**, **Sender**, and **Receiver**.
 1.  Clone the repository:
 
     ``` bash
-    git clone https://github.com/your-repo/parcel-delivery-frontend.git
-    cd parcel-delivery-frontend
+    git clone https://github.com/sultanmahmud07/Parcel-Delivery-Frontend.git
+    cd Parcel-Delivery-Frontend
     ```
 
 2.  Install dependencies:
@@ -47,7 +47,7 @@ dedicated roles like **Admin**, **Sender**, and **Receiver**.
 3.  Create a `.env` file in the root and configure API URL:
 
     ``` env
-    VITE_API_URL=http://localhost:5000/api
+    VITE_API_URL=https://parcel-delivery-api-sigma.vercel.app/api/v1
     ```
 
 4.  Run the development server:
@@ -67,7 +67,7 @@ dedicated roles like **Admin**, **Sender**, and **Receiver**.
 ## 🌍 Live URL
 
 [Parcel Delivery Frontend - Live
-Demo](https://your-live-site.vercel.app)
+Demo](https://parcel-delivery-frontend-nine.vercel.app)
 
 ------------------------------------------------------------------------
 
@@ -75,18 +75,18 @@ Demo](https://your-live-site.vercel.app)
 
 ### 👨‍💼 Admin
 
--   **Email:** admin@gmail.com\
--   **Password:** 123456
+-   **Email:** super@gmail.com
+-   **Password:** S@12345678
 
 ### 📤 Sender
 
--   **Email:** sender@gmail.com\
--   **Password:** 123456
+-   **Email:** sender@gmail.com
+-   **Password:** S@12345678
 
 ### 📥 Receiver
 
--   **Email:** receiver@gmail.com\
--   **Password:** 123456
+-   **Email:** receiver@gmail.com
+-   **Password:** R@12345678
 
 ------------------------------------------------------------------------
 
