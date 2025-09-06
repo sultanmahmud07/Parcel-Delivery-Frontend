@@ -1,5 +1,5 @@
 import ManageParcels from "@/pages/Receiver/ManageParcels";
-import MyProfile from "@/pages/Receiver/MyProfile";
+import MyProfile from "@/pages/Sender/MyProfile";
 import Overview from "@/pages/Receiver/Overview";
 import ReceivedParcel from "@/pages/Receiver/ReceivedParcel";
 import RecentParcels from "@/pages/Receiver/RecentParcels";
