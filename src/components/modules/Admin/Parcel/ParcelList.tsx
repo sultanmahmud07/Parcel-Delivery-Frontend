@@ -16,7 +16,7 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import { EyeIcon, ShieldMinus, Trash2 } from "lucide-react";
+import { EyeIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useBlockParcelByAdminMutation, useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
