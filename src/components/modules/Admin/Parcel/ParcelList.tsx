@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
+import Loader from "@/pages/Spinner";
 
 
 export default function ParcelList() {
@@ -119,7 +120,7 @@ export default function ParcelList() {
                         </TableHeader>
                         {
                               isLoading ?
-                                    <div>Loading...</div>
+                                    <Loader></Loader>
                                     :
                                     <TableBody>
                                           {data?.data.map((parcel: IParcel) => (
@@ -128,7 +129,11 @@ export default function ParcelList() {
                                                       <TableCell className="font-medium">{parcel.weight}</TableCell>
                                                       <TableCell>{parcel.fee || 0}</TableCell>
                                                       <TableCell className="">{formatDate(parcel.deliveryDate)}</TableCell>
-                                                      <TableCell>{parcel.address}</TableCell>
+                                                      <TableCell>
+                                                            {parcel.address.length > 25
+                                                                  ? parcel.address.slice(0, 25) + ".."
+                                                                  : parcel.address}
+                                                      </TableCell>
                                                       <TableCell className="flex items-center gap-2">
                                                             <div className="flex items-center space-x-2">
                                                                   {/* <Switch id="airplane-mode" />

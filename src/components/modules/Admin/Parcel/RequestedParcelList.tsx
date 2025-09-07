@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
+import Loader from "@/pages/Spinner";
 
 
 export default function RequestedParcelList() {
@@ -119,7 +120,7 @@ export default function RequestedParcelList() {
                         </TableHeader>
                         {
                               isLoading ?
-                                    <div>Loading...</div>
+                                    <Loader></Loader>
                                     :
                                     <TableBody>
                                           {data?.data.map((parcel: IParcel) => (
