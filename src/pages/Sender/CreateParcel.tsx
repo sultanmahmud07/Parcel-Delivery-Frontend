@@ -93,6 +93,10 @@ const CreateParcel = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
       console.error(err);
       const error = err as IApiError;
       toast.error(error?.data?.message || "Failed to create parcel");
+       if (error?.data?.errorSources) {
+             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+             error?.data?.errorSources.map((er:any) => toast.error(er.message) );
+            }
     }
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useAddContactMutation } from '@/redux/features/contact/contact.api';
 import { IApiError } from '@/types';
@@ -14,7 +15,7 @@ const ContactForm = () => {
     phone: '',
     message: '',
   });
-  const [isLoading, setIsLoading] = useState(false); // ⬅️ loader state
+  const [isLoading, setIsLoading] = useState(false); 
   const [addContact] = useAddContactMutation();
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -130,7 +131,7 @@ const ContactForm = () => {
 
               <button
                 type="submit"
-                className="px-6 py-2 bg-primary text-white hover:bg-secondary transition flex items-center gap-2 disabled:opacity-50"
+                className="px-6 py-2 bg-primary text-white cursor-pointer transition flex items-center gap-2 disabled:opacity-50"
                 disabled={isLoading}
               >
                 {isLoading ? (

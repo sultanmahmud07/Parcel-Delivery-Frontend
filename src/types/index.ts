@@ -27,6 +27,7 @@ export interface IApiError {
     success: boolean;
     message: string;
     error?: unknown;
+    errorSources: { message: string; path: string }[];
   };
 }
 export interface ISidebarItem {

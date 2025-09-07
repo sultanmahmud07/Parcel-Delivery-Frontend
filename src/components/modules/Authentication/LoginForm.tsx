@@ -15,7 +15,7 @@ import { IApiError } from "@/types";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 export function LoginForm({
   className,
@@ -25,14 +25,15 @@ export function LoginForm({
   const form = useForm({
   });
   const [login] = useLoginMutation();
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
+      console.log(res)
 
       if (res.success) {
         toast.success("Logged in successfully");
-        console.log(res.data.user.role)
+        Cookies.set('accessToken', res.data.accessToken, { expires: 7 })
+        Cookies.set('refreshToken', res.data.refreshToken, { expires: 7 })
         if (res.data.user.role === "SENDER") {
           navigate("/sender/overview");
         }
