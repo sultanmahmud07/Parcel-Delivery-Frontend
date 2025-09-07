@@ -29,6 +29,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
 import Loader from "@/pages/Spinner";
+import { Switch } from "@/components/ui/switch";
 
 
 export default function RequestedParcelList() {
@@ -132,11 +133,9 @@ export default function RequestedParcelList() {
                                                       <TableCell className="text-yellow-600">{parcel.status}</TableCell>
                                                       <TableCell className="flex items-center gap-2">
                                                             <div className="flex items-center space-x-2">
-                                                                  {/* <Switch id="airplane-mode" />
-       */}
-                                                                  <Button onClick={()=> handleUpdateParcel(parcel)} size="sm">
-                                                                        <ShieldMinus size={72} strokeWidth={2.25} />
-                                                                  </Button>
+                                                                  <Switch
+                                                                        checked={parcel.isBlocked}
+                                                                        id="airplane-mode" onClick={() => handleUpdateParcel(parcel)} />
                                                                   <Label htmlFor="airplane-mode">{parcel.isBlocked ? "Blocked" : "Unblock"}</Label>
                                                             </div>
                                                             <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
