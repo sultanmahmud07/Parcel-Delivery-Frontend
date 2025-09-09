@@ -47,6 +47,7 @@ const Navbar = () => {
     { href: "/about", label: "About", role: "PUBLIC" },
     { href: "/team", label: "Our Team", role: "PUBLIC" },
     { href: "/track", label: "Tracking", role: "PUBLIC" },
+    { href: "/faq", label: "FAQ", role: "PUBLIC" },
     { href: "/contact", label: "Contact Us", role: "PUBLIC" },
     { href: "/admin", label: "Dashboard", role: role.admin },
     { href: "/admin", label: "Dashboard", role: role.superAdmin },
@@ -168,6 +169,23 @@ const Navbar = () => {
           {/* Right toggle bar for mobile  */}
           {/* Mobile Toggle Button */}
           <div className="lg:hidden">
+             <div className="flex justify-end items-center gap-2">
+              <ModeToggle />
+              {data?.data?.email && (
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="text-xs size-8 px-7"
+                >
+                  Logout
+                </Button>
+              )}
+              {!data?.data?.email && (
+                <Button asChild className="text-xs size-8 px-7">
+                  <Link to="/login">Login</Link>
+                </Button>
+              )}
+
             <label className="cursor-pointer">
               <input
                 type="checkbox"
@@ -197,6 +215,7 @@ const Navbar = () => {
                 </svg>
               )}
             </label>
+            </div>
           </div>
         </div>
       </nav>

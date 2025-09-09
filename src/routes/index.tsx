@@ -19,6 +19,7 @@ import Contact from "@/pages/ContactPage";
 import TrackingParcelPage from "@/pages/TrackingParcelPage";
 import OurTeamPage from "@/pages/OurTeamPage";
 import UserDetails from "@/components/modules/Admin/User/UserDetails";
+import FAQPage from "@/pages/FAQ";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         Component: About,
         path: "about",
+      },
+      {
+        Component: FAQPage,
+        path: "faq",
       },
       {
         Component: Contact,
