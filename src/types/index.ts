@@ -75,6 +75,7 @@ export interface IUser {
   _id: string;
   name: string;
   email: string;
+  picture?: string;
   password: string;
   isDeleted: boolean;
   isActive: "ACTIVE" | "INACTIVE" | "BLOCKED";

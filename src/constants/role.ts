@@ -4,3 +4,5 @@ export const role = {
   sender: "SENDER",
   receiver: "RECEIVER"
 };
+
+export type Role = (typeof role)[keyof typeof role];

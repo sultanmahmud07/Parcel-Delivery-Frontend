@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import Loader from "@/pages/Spinner";
 import { useGetParcelDetailsByTrackingIdQuery } from "@/redux/features/parcel/parcel.api";
+import { IStatusLog } from "@/types/parcel.type";
 
 const ParcelTracking = () => {
   const [trackingId, setTrackingId] = useState("");
@@ -158,7 +159,7 @@ const ParcelTracking = () => {
             <div className="border-t pt-6">
               <h3 className="text-lg font-semibold mb-4">Status Timeline</h3>
               <div className="space-y-3">
-                {parcelInfo.statusLogs?.map((log: any, i: number) => (
+                {parcelInfo.statusLogs?.map((log: IStatusLog, i: number) => (
                   <div
                     key={i}
                     className="flex justify-between items-center border-b pb-2"

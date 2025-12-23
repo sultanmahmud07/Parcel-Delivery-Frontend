@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/images/logo/logo.png";
+import logoLight from "../../assets/images/logo/logo-light.png";
+import logoDark from "../../assets/images/logo/logo-dark.png";
 import { Link, NavLink, useNavigate } from "react-router";
 import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
@@ -10,6 +11,7 @@ import { role } from "@/constants/role";
 import { FaFacebookF, FaLinkedinIn, FaPhone, FaYoutube } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
+import UserProfileMenu from "./UserProfileMenu";
 
 const Navbar = () => {
   const [navToggle, setNavToggle] = useState(false);
@@ -21,7 +23,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 20) {
+      if (offset > 40) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
@@ -30,7 +32,7 @@ const Navbar = () => {
 
     window.addEventListener('scroll', handleScroll);
 
-   
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -57,34 +59,34 @@ const Navbar = () => {
 
   return (
     <header>
-      <nav className={`z-40  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-[#00000000]"}`}>
-        <div className={`nav_top text-white bg-primary py-2 ${isSticky ? " hidden" : "hidden md:block"}`}>
+      <nav className={`z-40  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-background"}`}>
+        <div className={`nav_top  bg-[#111827] py-2 ${isSticky ? " hidden" : "hidden md:block"}`}>
           <div className="main-container flex items-center justify-between">
             <div className="email_and_number flex items-center gap-8">
-              <p className="flex items-center gap-2 text-white">
+              <p className="flex items-center gap-2 text-primary">
                 <span><FaPhone /></span>
-                <span>+09639222888</span>
+                <span className="text-white">+88 01327-357894</span>
               </p>
-              <p className="flex items-center gap-2 text-white">
+              <p className="flex items-center gap-2 text-primary">
                 <span className="text-xl"><MdOutlineEmail /></span>
-                <span>info@gmail.com</span>
+                <span className="text-white">dev.mrshimul@gmail.com</span>
               </p>
             </div>
             <div className="social_media_link">
               <div className="flex items-center gap-3">
                 <span>Follow Us:</span>
-                <a href="https://www.facebook.com/joltorongo.awt" className="flex items-center justify-center transition text-white text-base">
+                <a href="https://www.facebook.com/joltorongo.awt" className="flex items-center justify-center transition text-primary text-base">
                   <FaFacebookF />
                 </a>
-                <a href="https://www.instagram.com/jol.torongo.coxbazar" className="flex items-center justify-center transition text-white text-base">
+                <a href="https://www.instagram.com/jol.torongo.coxbazar" className="flex items-center justify-center transition text-primary text-base">
                   <IoLogoInstagram />
                 </a>
-                <a href="https://www.linkedin.com/company/joltorongo" className="flex items-center justify-center transition text-white text-base">
+                <a href="https://www.linkedin.com/company/joltorongo" className="flex items-center justify-center transition text-primary text-base">
                   <FaLinkedinIn />
                 </a>
                 <a
                   href="https://www.youtube.com/@JoltorongoAWT"
-                  className="flex items-center justify-center transition text-white text-base"
+                  className="flex items-center justify-center transition text-primary text-base"
                 >
                   <FaYoutube />
                 </a>
@@ -96,14 +98,25 @@ const Navbar = () => {
           {/* Logo side here >>>>>>>>>>>>>>>> */}
           <div className="nav_logo_side">
             <Link className="flex flex-col items-center" to="/">
+
+              {/* Logo for Light Mode (Hidden in Dark Mode) */}
               <img
-                src={logo}
-                alt="logo"
+                src={logoLight}
+                alt="DropX Logo"
                 width={200}
                 height={100}
-                className="w-20"
+                className="w-40 block dark:hidden"
               />
-              {/* <span className="text- text-xs uppercase font-bold">Express BD</span> */}
+
+              {/* Logo for Dark Mode (Hidden in Light Mode) */}
+              <img
+                src={logoDark}
+                alt="DropX Logo"
+                width={200}
+                height={100}
+                className="w-40 hidden dark:block"
+              />
+
             </Link>
           </div>
           {/* NAv manu side here >>>>>>>>>>>>>>>> */}
@@ -151,13 +164,7 @@ const Navbar = () => {
             <div className="flex justify-end items-center gap-2">
               <ModeToggle />
               {data?.data?.email && (
-                <Button
-                  onClick={handleLogout}
-                  variant="outline"
-                  className="text-sm"
-                >
-                  Logout
-                </Button>
+                <UserProfileMenu userInfo={data.data} />
               )}
               {!data?.data?.email && (
                 <Button asChild className="text-sm">
@@ -169,7 +176,7 @@ const Navbar = () => {
           {/* Right toggle bar for mobile  */}
           {/* Mobile Toggle Button */}
           <div className="lg:hidden">
-             <div className="flex justify-end items-center gap-2">
+            <div className="flex justify-end items-center gap-2">
               <ModeToggle />
               {data?.data?.email && (
                 <Button
@@ -186,35 +193,35 @@ const Navbar = () => {
                 </Button>
               )}
 
-            <label className="cursor-pointer">
-              <input
-                type="checkbox"
-                className="hidden"
-                checked={navToggle}
-                onChange={() => setNavToggle((prev) => !prev)}
-              />
-              {navToggle ? (
-                <svg
-                  className="fill-current text-primary"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 512 512"
-                >
-                  <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
-                </svg>
-              ) : (
-                <svg
-                  className="fill-current text-primary"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 512 512"
-                >
-                  <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-                </svg>
-              )}
-            </label>
+              <label className="cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  checked={navToggle}
+                  onChange={() => setNavToggle((prev) => !prev)}
+                />
+                {navToggle ? (
+                  <svg
+                    className="fill-current text-primary"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 512 512"
+                  >
+                    <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+                  </svg>
+                ) : (
+                  <svg
+                    className="fill-current text-primary"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                  </svg>
+                )}
+              </label>
             </div>
           </div>
         </div>

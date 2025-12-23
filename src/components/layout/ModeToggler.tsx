@@ -1,37 +1,45 @@
 import { Moon, Sun } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/hooks/useTheme";
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  
+  // Check if current theme is dark to handle the switch state
+  const isDark = theme === "dark";
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className={`
+        relative w-16 h-8 flex items-center cursor-pointer rounded-full p-1 transition-colors duration-500 shadow-inner
+        ${isDark ? 'bg-slate-800 border border-slate-700' : 'bg-slate-200 border border-slate-300'}
+      `}
+    >
+      <span className="sr-only">Toggle theme</span>
+
+      {/* The Sliding Thumb */}
+      <div
+        className={`
+          bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] flex items-center justify-center relative overflow-hidden
+          ${isDark ? 'translate-x-8' : 'translate-x-0'}
+        `}
+      >
+        {/* Sun Icon: Visible when Light */}
+        <Sun 
+          className={`
+            absolute w-4 h-4 text-orange-500 transition-all duration-500
+            ${isDark ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}
+          `} 
+        />
+
+        {/* Moon Icon: Visible when Dark */}
+        <Moon 
+          className={`
+            absolute w-4 h-4 text-blue-600 transition-all duration-500
+            ${isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}
+          `} 
+        />
+      </div>
+    </div>
   );
 }
