@@ -59,7 +59,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <nav className={`z-40  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-background"}`}>
+      <nav className={`z-50  fixed top-[-5px] left-0 right-0 w-full py-2 lg:py-1 ${isSticky ? "border-b bg-background" : "bg-background"}`}>
         <div className={`nav_top  bg-[#111827] py-2 ${isSticky ? " hidden" : "hidden md:block"}`}>
           <div className="main-container flex items-center justify-between">
             <div className="email_and_number flex items-center gap-8">

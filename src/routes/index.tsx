@@ -20,6 +20,8 @@ import TrackingParcelPage from "@/pages/TrackingParcelPage";
 import OurTeamPage from "@/pages/OurTeamPage";
 import UserDetails from "@/components/modules/Admin/User/UserDetails";
 import FAQPage from "@/pages/FAQ";
+import HelpCenter from "@/pages/Help";
+import PrivacyTerms from "@/pages/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         Component: FAQPage,
         path: "faq",
+      },
+      {
+        Component: HelpCenter,
+        path: "help",
+      },
+      {
+        Component: PrivacyTerms,
+        path: "privacy-policy",
       },
       {
         Component: Contact,

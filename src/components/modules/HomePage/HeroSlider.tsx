@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
+import ParcelTracker from './ParcelTracker';
 
 // 1. Define the interface for your slide data
 interface SlideData {
@@ -78,20 +79,19 @@ const HeroSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[86vh] w-full overflow-hidden group pt-20">
-      
+    <div className="relative h-[92vh] md:h-[86vh] w-full group pt-20 mb-24 md:mb-16">
+
       {/* Slides Container */}
-      <div 
+      <div
         className="relative h-full w-full"
         // Pause auto-slide on hover for better UX
-        onMouseEnter={() => {}} 
+        onMouseEnter={() => { }}
       >
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 h-full w-full transition-opacity duration-700 ease-in-out ${
-              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`absolute inset-0 h-full w-full transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
           >
             {/* Background Image */}
             <div className="absolute inset-0">
@@ -107,19 +107,19 @@ const HeroSlider: React.FC = () => {
             {/* Content Content */}
             <div className="main-container relative z-20 flex h-full items-center">
               <div className="w-full md:max-w-5xl space-y-6 pt-10 "> {/* Padding left to make room for arrows */}
-                
+
                 {/* Subtitle */}
                 <span className="inline-block rounded bg-[#FA4318]/20 px-3 py-1 text-sm font-semibold uppercase tracking-wider text-[#FA4318] backdrop-blur-sm">
                   {slide.subTitle}
                 </span>
 
                 {/* Main Title */}
-                <h1 className="text-4xl font-extrabold uppercase leading-tight text-white md:text-6xl drop-shadow-lg">
+                <h1 className="text-3xl font-extrabold uppercase leading-tight text-white md:text-6xl drop-shadow-lg">
                   {slide.title}
                 </h1>
 
                 {/* Description */}
-                <p className="max-w-xl text-lg text-gray-200">
+                <p className="max-w-xl text-sm md:text-lg text-gray-200">
                   {slide.description}
                 </p>
 
@@ -127,13 +127,13 @@ const HeroSlider: React.FC = () => {
                 <div className="flex flex-wrap gap-4 pt-4">
                   <Link
                     to={slide.primaryBtnLink}
-                    className="rounded bg-[#FA4318] px-8 py-3 text-base font-bold text-white transition-transform hover:scale-105 hover:bg-orange-700 shadow-lg"
+                    className="rounded bg-[#FA4318] px-8 py-3 text-sm md:text-base font-bold text-white transition-transform hover:scale-105 hover:bg-orange-700 shadow-lg"
                   >
                     {slide.primaryBtnText}
                   </Link>
                   <Link
                     to={slide.secondaryBtnLink}
-                    className="rounded border-2 border-white bg-transparent px-8 py-3 text-base font-bold text-white transition-colors hover:bg-white hover:text-black"
+                    className="rounded border-2 border-white bg-transparent px-8 py-3 text-sm md:text-base font-bold text-white transition-colors hover:bg-white hover:text-black"
                   >
                     {slide.secondaryBtnText}
                   </Link>
@@ -146,7 +146,7 @@ const HeroSlider: React.FC = () => {
 
       {/* Navigation Buttons (Left Side Placement per image) */}
       <div className="absolute right-6 top-2/3 z-30 flex -translate-y-1/2 flex-col gap-4">
-        
+
         {/* Previous Button */}
         <button
           onClick={prevSlide}
@@ -172,12 +172,16 @@ const HeroSlider: React.FC = () => {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`h-3 w-3 rounded-full transition-all ${
-              currentSlide === index ? 'bg-[#FA4318] w-8' : 'bg-white/50 hover:bg-white'
-            }`}
+            className={`h-3 w-3 rounded-full transition-all ${currentSlide === index ? 'bg-[#FA4318] w-8' : 'bg-white/50 hover:bg-white'
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+      </div>
+      {/* === PARCEL TRACKER INTEGRATION === */}
+      {/* Positioned absolutely at the bottom, centered */}
+      <div className="absolute -bottom-24 md:-bottom-16 left-0 right-0 z-40 px-4 flex justify-center">
+        <ParcelTracker />
       </div>
     </div>
   );

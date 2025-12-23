@@ -1,4 +1,3 @@
-import React from 'react';
 import { Ship, Plane, Warehouse, ArrowRight } from 'lucide-react';
 
 const OurServices = () => {

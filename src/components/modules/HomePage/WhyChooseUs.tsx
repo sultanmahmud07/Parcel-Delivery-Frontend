@@ -1,4 +1,3 @@
-import React from 'react';
 import { Ship, Clock, ShieldCheck } from 'lucide-react'; // Assuming you're using lucide-react for icons
 import whyChooseUsImage from '../../../assets/images/why-choos-img.jpg'; // Update the path as necessary
 const WhyChooseUs = () => {

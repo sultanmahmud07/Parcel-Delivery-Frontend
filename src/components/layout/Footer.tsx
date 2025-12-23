@@ -59,10 +59,10 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { name: "About Us", path: "/about" },
-                { name: "Our Services", path: "/services" },
-                { name: "Pricing Plans", path: "/pricing" },
-                { name: "Delivery Team", path: "/team" },
+                { name: "About Us", path: "/" },
+                { name: "Our Services", path: "/" },
+                { name: "Pricing Plans", path: "/" },
+                { name: "Delivery Team", path: "/privacy-policy" },
                 { name: "Contact Us", path: "/contact" },
               ].map((link, i) => (
                 <li key={i}>
@@ -88,8 +88,8 @@ const Footer = () => {
                 { name: "Sea Transport", path: "/services/sea" },
                 { name: "Air Freight", path: "/services/air" },
                 { name: "Warehousing", path: "/services/warehousing" },
-                { name: "Door to Door", path: "/services/door" },
-                { name: "Packaging", path: "/services/packaging" },
+                { name: "Help Center", path: "/help" },
+                { name: "Privacy Policy", path: "/privacy-policy" },
               ].map((link, i) => (
                 <li key={i}>
                   <Link 
@@ -131,7 +131,7 @@ const Footer = () => {
                 <div>
                   <h6 className="font-bold text-white">Email Us</h6>
                   <p className="text-gray-400 text-sm mt-1 hover:text-[#FA4318] cursor-pointer transition-colors">
-                    hello@dropx.com
+                    dev.mrshimul@gmail.com
                   </p>
                 </div>
               </div>

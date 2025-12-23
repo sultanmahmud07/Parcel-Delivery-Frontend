@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from "react-router"; // Ensure you use 'react-router-dom'
 import { CheckCircle2 } from "lucide-react"; // Install: npm install lucide-react
 

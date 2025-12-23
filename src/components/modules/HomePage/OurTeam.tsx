@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Plus, Facebook, Twitter, Instagram } from 'lucide-react';
 
 const OurTeam = () => {
