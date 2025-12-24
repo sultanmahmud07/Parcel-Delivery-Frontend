@@ -8,7 +8,7 @@ import aboutIcon from '../../../../assets/images/delivery-icon.png'
 const About = () => {
   return (
     <section className="py-20 bg-white dark:bg-gray-950 transition-colors duration-300 overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8">
+      <div className="main-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 md:gap-10 items-center">
           
           {/* === Left Side: Image Composition === */}

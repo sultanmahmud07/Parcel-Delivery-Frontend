@@ -80,7 +80,7 @@ const HeroSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[92vh] md:h-[86vh] w-full group pt-20 mb-24 md:mb-16">
+    <div className="relative h-[92vh] md:h-[86vh] w-full group mt-20 mb-24 md:mb-16">
 
       {/* Slides Container */}
       <div
@@ -107,7 +107,7 @@ const HeroSlider: React.FC = () => {
 
             {/* Content Content */}
             <div className="main-container relative z-20 flex h-full items-center">
-              <div className="w-full md:max-w-5xl space-y-6 pt-10 "> {/* Padding left to make room for arrows */}
+              <div className="w-full md:max-w-5xl space-y-4 pt-0 "> {/* Padding left to make room for arrows */}
 
                 {/* Subtitle */}
                 <span className="inline-block rounded bg-[#FA4318]/20 px-3 py-1 text-sm font-semibold uppercase tracking-wider text-[#FA4318] backdrop-blur-sm">
@@ -115,7 +115,7 @@ const HeroSlider: React.FC = () => {
                 </span>
 
                 {/* Main Title */}
-                <h1 className="text-3xl font-extrabold uppercase leading-tight text-white md:text-6xl drop-shadow-lg">
+                <h1 className="text-3xl font-extrabold uppercase leading-tight text-white md:text-5xl drop-shadow-lg">
                   {slide.title}
                 </h1>
 

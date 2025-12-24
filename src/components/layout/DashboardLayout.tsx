@@ -8,6 +8,7 @@ import {
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Outlet } from "react-router";
+import { ModeToggle } from "./ModeToggler";
 
 export default function DashboardLayout() {
 const { data } = useUserInfoQuery(undefined);
@@ -22,6 +23,7 @@ const { data } = useUserInfoQuery(undefined);
             className="mr-2 data-[orientation=vertical]:h-4"
           />
          <div className="flex items-center gap-2 md:pr-3">
+          <ModeToggle />
            <span className="uppercase">{data?.data?.name}</span>
           <Avatar className="h-10 w-10 rounded-full border border-primary overflow-hidden">
             <AvatarImage src="https://github.com/evilrabbit.png"
