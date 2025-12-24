@@ -2,12 +2,10 @@
 import React, { useEffect, useState } from "react";
 import logoLight from "../../assets/images/logo/logo-light.png";
 import logoDark from "../../assets/images/logo/logo-dark.png";
-import { Link, NavLink, useNavigate } from "react-router";
-import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
-import { useAppDispatch } from "@/redux/hook";
+import { Link, NavLink } from "react-router";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { ModeToggle } from "./ModeToggler";
 import { Button } from "../ui/button";
-import { role } from "@/constants/role";
 import { FaFacebookF, FaLinkedinIn, FaPhone, FaYoutube } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
@@ -17,9 +15,6 @@ const Navbar = () => {
   const [navToggle, setNavToggle] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const { data } = useUserInfoQuery(undefined);
-  const [logout] = useLogoutMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -38,12 +33,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleLogout = async () => {
-    await logout(undefined);
-    dispatch(authApi.util.resetApiState());
-    navigate("/login")
-  };
-
   const navigationLinks = [
     { href: "/", label: "Home", role: "PUBLIC" },
     { href: "/about", label: "About", role: "PUBLIC" },
@@ -51,10 +40,10 @@ const Navbar = () => {
     { href: "/track", label: "Tracking", role: "PUBLIC" },
     { href: "/faq", label: "FAQ", role: "PUBLIC" },
     { href: "/contact", label: "Contact Us", role: "PUBLIC" },
-    { href: "/admin", label: "Dashboard", role: role.admin },
-    { href: "/admin", label: "Dashboard", role: role.superAdmin },
-    { href: "/sender", label: "Dashboard", role: role.sender },
-    { href: "/receiver", label: "Dashboard", role: role.receiver },
+    // { href: "/admin", label: "Dashboard", role: role.admin },
+    // { href: "/admin", label: "Dashboard", role: role.superAdmin },
+    // { href: "/sender", label: "Dashboard", role: role.sender },
+    // { href: "/receiver", label: "Dashboard", role: role.receiver },
   ];
 
   return (
@@ -134,7 +123,7 @@ const Navbar = () => {
                             <NavLink
                               onClick={() => setNavToggle(false)}
                               to={link.href}
-                              className={`flex font-semibold transition uppercase text-sm items-center gap-2  hover:text-primary`}
+                              className={`flex font-semibold transition capitalize text-sm md:text-base items-center gap-2  hover:text-primary`}
                             >
                               {link.label}
                             </NavLink>
@@ -167,7 +156,7 @@ const Navbar = () => {
                 <UserProfileMenu userInfo={data.data} />
               )}
               {!data?.data?.email && (
-                <Button asChild className="text-sm">
+                <Button asChild className="text-sm md:text-base px-3 md:px-6">
                   <Link to="/login">Login</Link>
                 </Button>
               )}
@@ -179,16 +168,10 @@ const Navbar = () => {
             <div className="flex justify-end items-center gap-2">
               <ModeToggle />
               {data?.data?.email && (
-                <Button
-                  onClick={handleLogout}
-                  variant="outline"
-                  className="text-xs size-8 px-7"
-                >
-                  Logout
-                </Button>
+               <UserProfileMenu userInfo={data?.data} />
               )}
               {!data?.data?.email && (
-                <Button asChild className="text-xs size-8 px-7">
+                <Button asChild className="text-sm md:text-base px-3 md:px-6">
                   <Link to="/login">Login</Link>
                 </Button>
               )}

@@ -32,8 +32,8 @@ const MoreData = () => {
               <p><strong>Name Of Organization:</strong> Char O Janata Unnayan Sangstha (CJUS)</p>
               <p><strong>Short Name:</strong> CJUS</p>
               <p><strong>Address Of Organization:</strong> House- 4, Level- 2, Road-15 Block- D, Banani, Dhaka Bangladesh.</p>
-              <p><strong>Cell Phone:</strong>+8801814-115544</p>
-              <p><strong>Email:</strong> info@gmail.com</p>
+              <p><strong>Cell Phone:</strong>+8801327357894</p>
+              <p><strong>Email:</strong> dev.mrshimul@gmail.com</p>
               <p><strong>Year Of Establishment:</strong> 2009</p>
               <p><strong>Name Of Contact Person:</strong> Azadur Rahman</p>
               <p><strong>Designation Of Contact Person:</strong> Executive Director</p>

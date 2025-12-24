@@ -1,4 +1,5 @@
 import { Ship, Plane, Warehouse, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router';
 
 const OurServices = () => {
   const services = [
@@ -9,6 +10,7 @@ const OurServices = () => {
       icon: <Ship className="w-8 h-8 text-[#FA4318]" />,
       // Fixed: New reliable Cargo Ship image
       image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=2070&auto=format&fit=crop", 
+      like: "/service/sea-transportation"
     },
     {
       id: 2,
@@ -16,6 +18,7 @@ const OurServices = () => {
       description: "Intrinsically exploit e-business imperative with emerging human capital.",
       icon: <Plane className="w-8 h-8 text-[#FA4318]" />,
       image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop",
+      like: "/service/air-transportation"
     },
     {
       id: 3,
@@ -23,6 +26,7 @@ const OurServices = () => {
       description: "Intrinsically exploit e-business imperative with emerging human capital.",
       icon: <Warehouse className="w-8 h-8 text-[#FA4318]" />,
       image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop",
+      like: "/service/warehousing"
     },
   ];
 
@@ -91,12 +95,12 @@ const OurServices = () => {
                 </p>
                 
                 {/* Read More Button */}
-                <div className="flex items-center gap-2 text-sm font-bold text-[#111827] dark:text-gray-200 uppercase cursor-pointer hover:text-[#FA4318] dark:hover:text-[#FA4318] transition-colors group/btn">
+                <Link to={service.like} className="flex items-center gap-2 text-sm font-bold text-[#111827] dark:text-gray-200 uppercase cursor-pointer hover:text-[#FA4318] dark:hover:text-[#FA4318] transition-colors group/btn">
                   <span>Read More</span>
                   <span className="bg-[#FA4318] rounded-full p-1 text-white group-hover/btn:translate-x-1 transition-transform">
                     <ArrowRight size={14} />
                   </span>
-                </div>
+                </Link>
               </div>
             </div>
           ))}

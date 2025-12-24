@@ -22,6 +22,9 @@ import UserDetails from "@/components/modules/Admin/User/UserDetails";
 import FAQPage from "@/pages/FAQ";
 import HelpCenter from "@/pages/Help";
 import PrivacyTerms from "@/pages/PrivacyPolicy";
+import SeaTransport from "@/pages/SeaTransport";
+import AirTransport from "@/pages/AirTransport";
+import Warehousing from "@/pages/Warehousing";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +46,18 @@ export const router = createBrowserRouter([
       {
         Component: HelpCenter,
         path: "help",
+      },
+      {
+        Component: SeaTransport,
+        path: "service/sea-transportation",
+      },
+      {
+        Component: AirTransport,
+        path: "service/air-transportation",
+      },
+      {
+        Component: Warehousing,
+        path: "service/warehousing",
       },
       {
         Component: PrivacyTerms,

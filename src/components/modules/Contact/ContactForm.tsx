@@ -178,7 +178,7 @@ const ContactForm = () => {
               </p>
 
               <p className="mt-2 font-semibold">
-                Email: <span className="font-normal">info@gmail.com</span>
+                Email: <span className="font-normal">dev.mrshimul@gmail.com</span>
               </p>
              <div className="flex items-center gap-3 py-5">
                         <a href="https://www.facebook.com/joltorongo.awt" className="flex items-center justify-center transition text-primary text-xl">

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router"; // Import this
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import Loader from "@/pages/Spinner";
@@ -6,12 +7,23 @@ import { useGetParcelDetailsByTrackingIdQuery } from "@/redux/features/parcel/pa
 import { IStatusLog } from "@/types/parcel.type";
 
 const ParcelTracking = () => {
+  const [searchParams] = useSearchParams();
+  const urlTrackId = searchParams.get("trackId") || "";
+
   const [trackingId, setTrackingId] = useState("");
-  const [submittedId, setSubmittedId] = useState(""); // ✅ store submitted ID
+  const [submittedId, setSubmittedId] = useState(""); 
+
+  // 1. Auto-fill and auto-submit if URL has trackId
+  useEffect(() => {
+    if (urlTrackId) {
+      setTrackingId(urlTrackId);
+      setSubmittedId(urlTrackId);
+    }
+  }, [urlTrackId]);
 
   const { data: parcelInfo, isFetching } =
     useGetParcelDetailsByTrackingIdQuery(submittedId, {
-      skip: !submittedId, // ✅ don't fetch until button clicked
+      skip: !submittedId,
     });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -22,8 +34,9 @@ const ParcelTracking = () => {
       return;
     }
 
-    setSubmittedId(trackingId); // ✅ trigger query only on submit
+    setSubmittedId(trackingId);
   };
+
   return (
     <div className="py-8 md:py-14">
       <div className="main-container">
@@ -71,7 +84,9 @@ const ParcelTracking = () => {
         </div>
 
         {isFetching && <Loader />}
-        {parcelInfo && (
+        
+        {/* Only show details if we are NOT fetching and have data */}
+        {!isFetching && parcelInfo ? (
           <div className="parcel-details w-full md:w-2/3 mx-auto mt-10 border rounded-xl shadow-md p-6 space-y-6">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
@@ -80,12 +95,13 @@ const ParcelTracking = () => {
               </h2>
               <div className="flex items-center gap-2">
                 <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${parcelInfo.status === "DELIVERED"
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    parcelInfo.status === "DELIVERED"
                       ? "bg-green-100 text-green-700"
                       : parcelInfo.status === "REQUESTED"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
+                      ? "bg-blue-100 text-blue-700"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
                 >
                   {parcelInfo.status}
                 </span>
@@ -107,13 +123,12 @@ const ParcelTracking = () => {
                 <p className="text-sm text-gray-500">Weight</p>
                 <p className="font-medium">{parcelInfo.weight} kg</p>
               </div>
-             {
-              parcelInfo.fee &&
-               <div className="flex justify-between border-b pb-2">
-                <p className="text-sm text-gray-500">Fee</p>
-                <p className="font-medium">{parcelInfo.fee || 0} BDT</p>
-              </div>
-             }
+              {parcelInfo.fee && (
+                <div className="flex justify-between border-b pb-2">
+                  <p className="text-sm text-gray-500">Fee</p>
+                  <p className="font-medium">{parcelInfo.fee || 0} BDT</p>
+                </div>
+              )}
               <div className="flex justify-between border-b pb-2">
                 <p className="text-sm text-gray-500">Address</p>
                 <p className="font-medium text-right">{parcelInfo.address}</p>
@@ -173,7 +188,8 @@ const ParcelTracking = () => {
               </div>
             </div>
           </div>
-        )}
+        )
+        : <p className="text-center py-5 text-xl text-gray-400">No Parcel Found with this {searchParams.get("trackingNumber")}</p>}
 
       </div>
     </div>

@@ -59,8 +59,8 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { name: "About Us", path: "/" },
-                { name: "Our Services", path: "/" },
+                { name: "About Us", path: "/about" },
+                { name: "Our Services", path: "/service/sea-transportation" },
                 { name: "Pricing Plans", path: "/" },
                 { name: "Delivery Team", path: "/privacy-policy" },
                 { name: "Contact Us", path: "/contact" },
@@ -85,9 +85,9 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { name: "Sea Transport", path: "/services/sea" },
-                { name: "Air Freight", path: "/services/air" },
-                { name: "Warehousing", path: "/services/warehousing" },
+                { name: "Sea Transport", path: "/service/sea-transportation" },
+                { name: "Air Freight", path: "/service/air-transportation" },
+                { name: "Warehousing", path: "/service/warehousing" },
                 { name: "Help Center", path: "/help" },
                 { name: "Privacy Policy", path: "/privacy-policy" },
               ].map((link, i) => (
