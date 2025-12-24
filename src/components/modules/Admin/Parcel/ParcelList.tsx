@@ -28,8 +28,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
-import Loader from "@/pages/Spinner";
 import { Switch } from "@/components/ui/switch";
+import TableSkeleton from "../../loader/Receiver/TableSkeleton";
 
 
 export default function ParcelList() {
@@ -108,21 +108,21 @@ export default function ParcelList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Type</TableHead>
-                                    <TableHead>Weight</TableHead>
-                                    <TableHead>Deu Amount</TableHead>
-                                    <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Address</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Type</TableHead>
+                                                <TableHead>Weight</TableHead>
+                                                <TableHead>Deu Amount</TableHead>
+                                                <TableHead>Delivery Date</TableHead>
+                                                <TableHead className="">Address</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.data.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
@@ -137,9 +137,9 @@ export default function ParcelList() {
                                                       </TableCell>
                                                       <TableCell className="flex items-center gap-2">
                                                             <div className="flex items-center space-x-2">
-                                                                  <Switch 
-                                                                  checked={parcel.isBlocked}
-                                                                  id="airplane-mode" onClick={() => handleUpdateParcel(parcel)}  />
+                                                                  <Switch
+                                                                        checked={parcel.isBlocked}
+                                                                        id="airplane-mode" onClick={() => handleUpdateParcel(parcel)} />
                                                                   <Label htmlFor="airplane-mode">{parcel.isBlocked ? "Blocked" : "Unblock"}</Label>
                                                             </div>
                                                             <Link className="w-full cursor-pointer" to={`/admin/parcel/${parcel._id}`}>
@@ -159,8 +159,8 @@ export default function ParcelList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>

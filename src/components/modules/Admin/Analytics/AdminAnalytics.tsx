@@ -16,15 +16,15 @@ import {
 
 // ✅ lucide-react icons
 import { Package, CheckCircle2, Truck, Clock } from "lucide-react";
-import Loader from "@/pages/Spinner";
 import RecentParcelForOverview from "./RecentParcelForOverview";
+import AnalyticsSkeleton from "../../loader/Receiver/AnalyticsSkeleton";
 
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"];
 
 const AdminAnalytics = () => {
   const { data: parcels = [], isLoading } = useGetAllParcelsQuery(undefined);
   if(isLoading){
-      return(<Loader></Loader>)
+      return(<AnalyticsSkeleton></AnalyticsSkeleton>)
   }
   // Summary counts
   const totalParcels = parcels?.data?.length;

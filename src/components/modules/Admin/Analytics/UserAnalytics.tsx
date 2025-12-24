@@ -16,14 +16,14 @@ import {
 // ✅ lucide-react icons
 import { Users, UserCheck, UserX, UserMinus } from "lucide-react";
 import { useGetAllUserQuery } from "@/redux/features/user/user.api";
-import Loader from "@/pages/Spinner";
+import AnalyticsSkeleton from "../../loader/Receiver/AnalyticsSkeleton";
 
 const COLORS = ["#10B981", "#F59E0B", "#3B82F6", "#EF4444", "#8B5CF6"];
 
 const UserAnalytics = () => {
   const { data, isLoading } = useGetAllUserQuery(undefined);
     if(isLoading){
-      return(<Loader></Loader>)
+      return(<AnalyticsSkeleton></AnalyticsSkeleton>)
   }
 const users = data?.data;
   // Summary counts

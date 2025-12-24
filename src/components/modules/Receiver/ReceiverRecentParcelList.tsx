@@ -15,14 +15,14 @@ import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
 import { formatDate } from "@/utils/getDateFormater";
 import { IApiError } from "@/types";
-import Loader from "@/pages/Spinner";
+import TableSkeleton from "../loader/Receiver/TableSkeleton";
 
 
 export default function ReceiverRecentParcelList() {
-      const { data, isLoading } = useGetParcelByReceiverQuery({ page: 1, limit:6,});
+      const { data, isLoading } = useGetParcelByReceiverQuery({ page: 1, limit: 6, });
       const [deliveryParcelByReceiver] = useDeliveryParcelByReceiverMutation();
       const handleRemoveParcel = async (parcelId: string) => {
-               const toastId = toast.loading("Updating...");
+            const toastId = toast.loading("Updating...");
             try {
                   const res = await deliveryParcelByReceiver(parcelId).unwrap();
                   if (res.success) {
@@ -43,22 +43,22 @@ export default function ReceiverRecentParcelList() {
                         <h1 className="text-2xl font-bold">Recent Parcels</h1>
                         <Link className="underline text-primary" to={"/receiver/parcel/recent"}>View all</Link>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Type</TableHead>
-                                    <TableHead>Weight</TableHead>
-                                    <TableHead>Deu Amount</TableHead>
-                                    <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Tracking Id</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Type</TableHead>
+                                                <TableHead>Weight</TableHead>
+                                                <TableHead>Deu Amount</TableHead>
+                                                <TableHead>Delivery Date</TableHead>
+                                                <TableHead className="">Tracking Id</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
@@ -85,8 +85,8 @@ export default function ReceiverRecentParcelList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
             </div>
       );
 }

@@ -26,7 +26,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { UserActionMenu } from "./UserActionMenu";
 import { useGetAllAdminQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import { IApiError, IUser } from "@/types";
-import Loader from "@/pages/Spinner";
+import TableSkeleton from "../../loader/Receiver/TableSkeleton";
 
 
 export default function AllAdminList() {
@@ -61,7 +61,7 @@ export default function AllAdminList() {
             }
       };
 
-      const totalPage =  1;
+      const totalPage = 1;
       // console.log(data)
 
 
@@ -89,21 +89,21 @@ export default function AllAdminList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Name</TableHead>
+                                                <TableHead>Email</TableHead>
+                                                <TableHead>Role</TableHead>
+                                                <TableHead>Date</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.data.map((user: IUser) => (
                                                 <TableRow key={user._id}>
@@ -130,8 +130,8 @@ export default function AllAdminList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>

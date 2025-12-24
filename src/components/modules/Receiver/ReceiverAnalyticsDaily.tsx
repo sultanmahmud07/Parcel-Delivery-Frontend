@@ -3,13 +3,13 @@ import { PieChart, Pie, Cell, Tooltip, Legend, LineChart, Line, XAxis, YAxis, Ca
 import { Package, CheckCircle2, Truck, Clock } from "lucide-react";
 import { useGetReceiverAnalyticsQuery } from "@/redux/features/receiver/receiver.api";
 import ReceiverRecentParcelList from "./ReceiverRecentParcelList";
-import Loader from "@/pages/Spinner";
+import AnalyticsSkeleton from "../loader/Receiver/AnalyticsSkeleton";
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"];
 
 const ReceiverAnalytics = () => {
   const { data, isLoading } = useGetReceiverAnalyticsQuery(undefined);
 
-  if (isLoading) return<Loader></Loader>
+  if (isLoading) return<AnalyticsSkeleton></AnalyticsSkeleton>
 
   console.log(data)
   const { totalParcels, delivered, inTransit, pending, canceled, dailyData } =

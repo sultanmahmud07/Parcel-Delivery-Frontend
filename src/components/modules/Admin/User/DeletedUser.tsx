@@ -19,7 +19,7 @@ import { UserActionMenu } from "./UserActionMenu";
 import { useGetDeletedUserQuery, useUpdateUserMutation } from "@/redux/features/user/user.api";
 import { IApiError, IUser } from "@/types";
 import { UndoDeleteConfirmation } from "@/components/UndoDeleteConfirmation";
-import Loader from "@/pages/Spinner";
+import TableSkeleton from "../../loader/Receiver/TableSkeleton";
 
 
 export default function DeletedUserList() {
@@ -80,21 +80,21 @@ export default function DeletedUserList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Name</TableHead>
+                                                <TableHead>Email</TableHead>
+                                                <TableHead>Role</TableHead>
+                                                <TableHead>Date</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.data.map((user: IUser) => (
                                                 <TableRow key={user._id}>
@@ -112,7 +112,7 @@ export default function DeletedUserList() {
                                                             <UndoDeleteConfirmation
                                                                   onConfirm={() => handleRemoveUser(user._id)}
                                                             >
-                                                                  <Button  size="sm">
+                                                                  <Button size="sm">
                                                                         <History size={72} strokeWidth={3.25} />
                                                                   </Button>
                                                             </UndoDeleteConfirmation>
@@ -121,8 +121,8 @@ export default function DeletedUserList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {/* {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>

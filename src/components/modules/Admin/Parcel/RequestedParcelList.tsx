@@ -16,7 +16,7 @@ import {
       PaginationNext,
       PaginationPrevious,
 } from "@/components/ui/pagination";
-import { EyeIcon,Trash2 } from "lucide-react";
+import { EyeIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useBlockParcelByAdminMutation, useGetAllParcelsQuery, useRemoveParcelMutation } from "@/redux/features/parcel/parcel.api";
@@ -28,8 +28,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { IApiError } from "@/types";
-import Loader from "@/pages/Spinner";
 import { Switch } from "@/components/ui/switch";
+import TableSkeleton from "../../loader/Receiver/TableSkeleton";
 
 
 export default function RequestedParcelList() {
@@ -108,21 +108,21 @@ export default function RequestedParcelList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Type</TableHead>
-                                    <TableHead>Weight</TableHead>
-                                    <TableHead>Deu Amount</TableHead>
-                                    <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Type</TableHead>
+                                                <TableHead>Weight</TableHead>
+                                                <TableHead>Deu Amount</TableHead>
+                                                <TableHead>Delivery Date</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.data.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
@@ -155,8 +155,8 @@ export default function RequestedParcelList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>

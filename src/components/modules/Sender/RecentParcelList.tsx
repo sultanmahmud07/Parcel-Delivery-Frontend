@@ -15,15 +15,15 @@ import { IParcel } from "@/types/parcel.type";
 import { Link } from "react-router";
 import { formatDate } from "@/utils/getDateFormater";
 import { IApiError } from "@/types";
-import Loader from "@/pages/Spinner";
+import TableSkeleton from "../loader/Receiver/TableSkeleton";
 
 
 export default function SenderRecentParcelList() {
-      const { data, isLoading } = useGetParcelBySenderQuery({ page: 1, limit: 5});
+      const { data, isLoading } = useGetParcelBySenderQuery({ page: 1, limit: 5 });
       const [cancelParcelBySender] = useCancelParcelBySenderMutation();
-    
+
       const handleRemoveParcel = async (parcelId: string) => {
-               const toastId = toast.loading("Updating...");
+            const toastId = toast.loading("Updating...");
             try {
                   const res = await cancelParcelBySender(parcelId).unwrap();
                   if (res.success) {
@@ -37,30 +37,30 @@ export default function SenderRecentParcelList() {
                   toast.error(`${error.data.message}`);
             }
       };
-    
+
 
       return (
             <div className="w-full border-t my-5 py-3">
-                   <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
                         <h1 className="text-2xl font-bold">Recent Parcels</h1>
                         <Link className="underline text-primary" to={"/sender/parcels"}>View all</Link>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Type</TableHead>
-                                    <TableHead>Weight</TableHead>
-                                    <TableHead>Deu Amount</TableHead>
-                                    <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Tracking Id</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Type</TableHead>
+                                                <TableHead>Weight</TableHead>
+                                                <TableHead>Deu Amount</TableHead>
+                                                <TableHead>Delivery Date</TableHead>
+                                                <TableHead className="">Tracking Id</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
@@ -87,8 +87,8 @@ export default function SenderRecentParcelList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
             </div>
       );
 }

@@ -23,8 +23,8 @@ import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IContact } from "@/types";
-import Loader from "@/pages/Spinner";
 import { useGetAllContactQuery, useRemoveContactMutation } from "@/redux/features/contact/contact.api";
+import TableSkeleton from "../../loader/Receiver/TableSkeleton";
 
 
 export default function AllContactList() {
@@ -33,7 +33,7 @@ export default function AllContactList() {
       const [searchTerm, setSearchTerm] = useState("")
       const [sortOrder, setSortOrder] = useState("")
       const { data, isLoading } = useGetAllContactQuery({ page: currentPage, limit, searchTerm, sort: sortOrder });
-            const [removeContact] = useRemoveContactMutation();
+      const [removeContact] = useRemoveContactMutation();
       const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(e.target.value)
       }
@@ -42,7 +42,7 @@ export default function AllContactList() {
             setSortOrder(value)
       }
       const handleRemoveUser = async (contactId: string) => {
-             const toastId = toast.loading("Removing...");
+            const toastId = toast.loading("Removing...");
             try {
                   const res = await removeContact(contactId).unwrap();
 
@@ -84,21 +84,21 @@ export default function AllContactList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Phone</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead className="">Message</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Name</TableHead>
+                                                <TableHead>Email</TableHead>
+                                                <TableHead>Phone</TableHead>
+                                                <TableHead>Date</TableHead>
+                                                <TableHead className="">Message</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.data.map((user: IContact) => (
                                                 <TableRow key={user._id}>
@@ -124,8 +124,8 @@ export default function AllContactList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>

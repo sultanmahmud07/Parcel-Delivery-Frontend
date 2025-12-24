@@ -26,7 +26,7 @@ import { formatDate } from "@/utils/getDateFormater";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IApiError } from "@/types";
-import Loader from "@/pages/Spinner";
+import TableSkeleton from "../loader/Receiver/TableSkeleton";
 
 
 export default function SenderParcelList() {
@@ -44,7 +44,7 @@ export default function SenderParcelList() {
             setSortOrder(value)
       }
       const handleRemoveParcel = async (parcelId: string) => {
-               const toastId = toast.loading("Updating...");
+            const toastId = toast.loading("Updating...");
             try {
                   const res = await cancelParcelBySender(parcelId).unwrap();
                   if (res.success) {
@@ -86,22 +86,22 @@ export default function SenderParcelList() {
                               </SelectContent>
                         </Select>
                   </div>
-                  <Table>
-                        <TableHeader>
-                              <TableRow>
-                                    <TableHead className="">Type</TableHead>
-                                    <TableHead>Weight</TableHead>
-                                    <TableHead>Deu Amount</TableHead>
-                                    <TableHead>Delivery Date</TableHead>
-                                    <TableHead className="">Tracking Id</TableHead>
-                                    <TableHead className="">Status</TableHead>
-                                    <TableHead className="text-center">Action</TableHead>
-                              </TableRow>
-                        </TableHeader>
-                        {
-                              isLoading ?
-                                    <Loader></Loader>
-                                    :
+                  {
+                        isLoading ?
+                              <TableSkeleton></TableSkeleton>
+                              :
+                              <Table>
+                                    <TableHeader>
+                                          <TableRow>
+                                                <TableHead className="">Type</TableHead>
+                                                <TableHead>Weight</TableHead>
+                                                <TableHead>Deu Amount</TableHead>
+                                                <TableHead>Delivery Date</TableHead>
+                                                <TableHead className="">Tracking Id</TableHead>
+                                                <TableHead className="">Status</TableHead>
+                                                <TableHead className="text-center">Action</TableHead>
+                                          </TableRow>
+                                    </TableHeader>
                                     <TableBody>
                                           {data?.map((parcel: IParcel) => (
                                                 <TableRow key={parcel._id}>
@@ -128,8 +128,8 @@ export default function SenderParcelList() {
                                                 </TableRow>
                                           ))}
                                     </TableBody>
-                        }
-                  </Table>
+                              </Table>
+                  }
                   {totalPage > 1 && (
                         <div className="flex justify-end mt-4">
                               <div>
